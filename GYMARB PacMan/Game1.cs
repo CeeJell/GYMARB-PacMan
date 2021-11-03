@@ -1,17 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace GYMARB_PacMan
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        Texture2D Pacman;
 
         public Game1()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -25,7 +28,8 @@ namespace GYMARB_PacMan
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            Pacman = Content.Load<Texture2D>("Pacman");
 
             // TODO: use this.Content to load your game content here
         }
@@ -43,6 +47,11 @@ namespace GYMARB_PacMan
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin();
+            spriteBatch.Draw(Pacman, new Vector2(200,300), Color.White);
+            spriteBatch.End();
+
 
             // TODO: Add your drawing code here
 
