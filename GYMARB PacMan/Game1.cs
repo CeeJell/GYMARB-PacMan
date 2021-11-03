@@ -62,25 +62,25 @@ namespace GYMARB_PacMan
 
             if (state.IsKeyDown(Keys.W))
             {
-                pmSpeed = new Vector2(0, -1.0f);
+                pmSpeed = new Vector2(0, -2.0f);
                 pmDirection = 'W';
 
             }
             else if (state.IsKeyDown(Keys.D))
             {
-                pmSpeed = new Vector2(1.0f, 0);
+                pmSpeed = new Vector2(2.0f, 0);
                 pmDirection = 'D';
 
             }
             else if (state.IsKeyDown(Keys.A))
             {
-                pmSpeed = new Vector2(-1.0f, 0);
+                pmSpeed = new Vector2(-2.0f, 0);
                 pmDirection = 'A';
 
             }
             else if (state.IsKeyDown(Keys.S))
             {
-                pmSpeed = new Vector2(0, 1.0f);
+                pmSpeed = new Vector2(0, 2.0f);
                 pmDirection = 'S';
 
             }
