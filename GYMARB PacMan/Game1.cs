@@ -16,6 +16,7 @@ namespace GYMARB_PacMan
         Texture2D test;
         bool Hit;
         char pmDirection;
+        char pmDisable;
 
         public Game1()
         {
@@ -52,49 +53,76 @@ namespace GYMARB_PacMan
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+
+            //kollision
+
+            Rectangle pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, pmTexture.Width, pmTexture.Height);
+            Rectangle testBox = new Rectangle((int)200, (int)200, 512, 512);
+
+
+
+
+
+
+
+
+
             // Pacmans rörelse
 
             pmPosition += pmSpeed;
 
-            
+            if (Hit)
+            {
+                pmDisable = pmDirection;
+                if (pmDisable == 'W')
+                {
+
+                }
+            }
 
             var state = Keyboard.GetState();
 
-            if (state.IsKeyDown(Keys.W))
+            if (state.IsKeyDown(Keys.W) && pmDisable != 'W')
             {
                 pmSpeed = new Vector2(0, -2.0f);
                 pmDirection = 'W';
-
+                if (pmDisable == 'S')
+                {
+                    pmDisable = ' ';
+                }
             }
-            else if (state.IsKeyDown(Keys.D))
+            else if (state.IsKeyDown(Keys.D) && pmDisable != 'D')
             {
                 pmSpeed = new Vector2(2.0f, 0);
                 pmDirection = 'D';
-
+                if (pmDisable == 'A')
+                {
+                    pmDisable = ' ';
+                }
             }
-            else if (state.IsKeyDown(Keys.A))
+            else if (state.IsKeyDown(Keys.A) && pmDisable != 'A')
             {
                 pmSpeed = new Vector2(-2.0f, 0);
                 pmDirection = 'A';
-
+                if (pmDisable == 'D')
+                {
+                    pmDisable = ' ';
+                }
             }
-            else if (state.IsKeyDown(Keys.S))
+            else if (state.IsKeyDown(Keys.S) && pmDisable != 'S')
             {
                 pmSpeed = new Vector2(0, 2.0f);
                 pmDirection = 'S';
-
+                if (pmDisable == 'W')
+                {
+                    pmDisable = ' ';
+                }
             }
             else
             {
                 pmSpeed = new Vector2(0, 0);
             }
 
-
-
-            //kollision
-
-            Rectangle pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, pmTexture.Width, pmTexture.Height);
-            Rectangle testBox = new Rectangle((int)200, (int)200, 512, 512);
 
 
             var kollision = Intersection(pmBox, testBox);
@@ -104,12 +132,8 @@ namespace GYMARB_PacMan
                 Rectangle r1 = Normalize(pmBox, kollision);
                 Rectangle r2 = Normalize(testBox, kollision);
                 Hit = TestCollision(pmTexture, r1, test, r2);
-                if (state.IsKeyDown(Keys.W))
-                {
 
-                }
             }
-
 
 
 
