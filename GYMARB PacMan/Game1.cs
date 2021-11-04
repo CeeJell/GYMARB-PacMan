@@ -58,15 +58,6 @@ namespace GYMARB_PacMan
 
 
 
-
-
-
-
-
-
-
-
-
             // Pacmans rörelse
 
             pmPosition += pmSpeed;
@@ -91,7 +82,7 @@ namespace GYMARB_PacMan
                 if (pmDirection == 'D')
                 {
                    DisableD = true;
-                    pmPosition = new Vector2(pmPosition.X - 1f, pmPosition.Y);
+                   pmPosition = new Vector2(pmPosition.X - 1f, pmPosition.Y);
                 }
             }
 
@@ -102,24 +93,32 @@ namespace GYMARB_PacMan
                 pmSpeed = new Vector2(0, -2.0f);
                 pmDirection = 'W';
                 if (DisableS) DisableS = false;
+      //          if (DisableD) DisableD = false;
+      //          if (DisableA) DisableA = false;
             }
             else if (state.IsKeyDown(Keys.D) && !DisableD)
             {
                 pmSpeed = new Vector2(2.0f, 0);
                 pmDirection = 'D';
                 if (DisableA) DisableA = false;
+       //         if (DisableS) DisableS = false;
+       //         if (DisableW) DisableW = false;
             }
             else if (state.IsKeyDown(Keys.A) && !DisableA)
             {
                 pmSpeed = new Vector2(-2.0f, 0);
                 pmDirection = 'A';
                 if (DisableD) DisableD = false;
+     //           if (DisableS) DisableS = false;
+     //           if (DisableW) DisableW = false;
             }
             else if (state.IsKeyDown(Keys.S) && !DisableS)
             {
                 pmSpeed = new Vector2(0, 2.0f);
                 pmDirection = 'S';
                 if (DisableW) DisableW = false;
+      //          if (DisableD) DisableD = false;
+      //          if (DisableA) DisableA = false;
             }
             else
             {
