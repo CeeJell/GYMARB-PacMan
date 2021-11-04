@@ -35,7 +35,9 @@ namespace GYMARB_PacMan
 
 
 
-            // TODO: Add your initialization logic here
+            graphics.PreferredBackBufferWidth = 1600;
+            graphics.PreferredBackBufferHeight = 900;
+            graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -51,6 +53,54 @@ namespace GYMARB_PacMan
             // TODO: use this.Content to load your game content here
         }
 
+
+        protected void Disable()
+        {
+            DisableW = true;
+            DisableA = true;
+            DisableS = true;
+            DisableD = true;
+        }
+
+
+        protected void ifHit(char direction)
+        {
+            if (direction == 'W')
+            {
+                Disable();
+                pmPosition = new Vector2(pmPosition.X, pmPosition.Y + 10f);
+                DisableA = false;
+                DisableS = false;
+                DisableD = false;
+            }
+            if (direction == 'A')
+            {
+                Disable();
+                pmPosition = new Vector2(pmPosition.X + 10f, pmPosition.Y);
+                DisableW = false;
+                DisableS = false;
+                DisableD = false;
+            }
+            if (direction == 'S')
+            {
+                Disable();
+                pmPosition = new Vector2(pmPosition.X, pmPosition.Y - 10f);
+                DisableW = false;
+                DisableA = false;
+                DisableD = false;
+            }
+            if (direction == 'D')
+            {
+                Disable();
+                pmPosition = new Vector2(pmPosition.X - 10f, pmPosition.Y);
+                DisableW = false;
+                DisableA = false;
+                DisableS = false;
+            }
+        }
+
+
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -62,29 +112,7 @@ namespace GYMARB_PacMan
 
             pmPosition += pmSpeed;
 
-            if (Hit)
-            {
-                if (pmDirection == 'W')
-                {
-                    DisableW = true;
-                    pmPosition = new Vector2(pmPosition.X, pmPosition.Y + 1f);
-                }
-                if (pmDirection == 'A')
-                {
-                    DisableA = true;
-                    pmPosition = new Vector2(pmPosition.X + 1f, pmPosition.Y);
-                }
-                if (pmDirection == 'S')
-                {
-                    DisableS = true;
-                    pmPosition = new Vector2(pmPosition.X, pmPosition.Y - 1f);
-                }
-                if (pmDirection == 'D')
-                {
-                   DisableD = true;
-                   pmPosition = new Vector2(pmPosition.X - 1f, pmPosition.Y);
-                }
-            }
+
 
             var state = Keyboard.GetState();
 
@@ -93,37 +121,55 @@ namespace GYMARB_PacMan
                 pmSpeed = new Vector2(0, -2.0f);
                 pmDirection = 'W';
                 if (DisableS) DisableS = false;
-      //          if (DisableD) DisableD = false;
-      //          if (DisableA) DisableA = false;
+                if (DisableD) DisableD = false;
+                if (DisableA) DisableA = false;
+                if (Hit)
+                {
+                    ifHit(pmDirection);
+                }
             }
             else if (state.IsKeyDown(Keys.D) && !DisableD)
             {
                 pmSpeed = new Vector2(2.0f, 0);
                 pmDirection = 'D';
                 if (DisableA) DisableA = false;
-       //         if (DisableS) DisableS = false;
-       //         if (DisableW) DisableW = false;
+                if (DisableS) DisableS = false;
+                if (DisableW) DisableW = false;
+                if (Hit)
+                {
+                    ifHit(pmDirection);
+                }
             }
             else if (state.IsKeyDown(Keys.A) && !DisableA)
             {
                 pmSpeed = new Vector2(-2.0f, 0);
                 pmDirection = 'A';
                 if (DisableD) DisableD = false;
-     //           if (DisableS) DisableS = false;
-     //           if (DisableW) DisableW = false;
+                if (DisableS) DisableS = false;
+                if (DisableW) DisableW = false;
+                if (Hit)
+                {
+                    ifHit(pmDirection);
+                }
             }
             else if (state.IsKeyDown(Keys.S) && !DisableS)
             {
                 pmSpeed = new Vector2(0, 2.0f);
                 pmDirection = 'S';
                 if (DisableW) DisableW = false;
-      //          if (DisableD) DisableD = false;
-      //          if (DisableA) DisableA = false;
+                if (DisableD) DisableD = false;
+                if (DisableA) DisableA = false;
+                if (Hit)
+                {
+                    ifHit(pmDirection);
+                }
             }
             else
             {
                 pmSpeed = new Vector2(0, 0);
             }
+
+            if (Hit) ifHit(pmDirection);
 
 
             //kollision
