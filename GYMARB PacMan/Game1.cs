@@ -57,10 +57,7 @@ namespace GYMARB_PacMan
                 Exit();
 
 
-            //kollision
 
-            Rectangle pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, pmTexture.Width, pmTexture.Height);
-            Rectangle testBox = new Rectangle((int)200, (int)200, 512, 512);
 
 
 
@@ -130,6 +127,10 @@ namespace GYMARB_PacMan
             }
 
 
+            //kollision
+
+            Rectangle pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, pmTexture.Width, pmTexture.Height);
+            Rectangle testBox = new Rectangle((int)200, (int)200, 512, 512);
 
             var kollision = Intersection(pmBox, testBox);
 
