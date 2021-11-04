@@ -16,7 +16,10 @@ namespace GYMARB_PacMan
         Texture2D test;
         bool Hit;
         char pmDirection;
-        char pmDisable;
+        bool DisableW;
+        bool DisableA;
+        bool DisableS;
+        bool DisableD;
 
         public Game1()
         {
@@ -73,50 +76,53 @@ namespace GYMARB_PacMan
 
             if (Hit)
             {
-                pmDisable = pmDirection;
-                if (pmDisable == 'W')
+                if (pmDirection == 'W')
                 {
-
+                    DisableW = true;
+                    pmPosition = new Vector2(pmPosition.X, pmPosition.Y + 1f);
+                }
+                if (pmDirection == 'A')
+                {
+                    DisableA = true;
+                    pmPosition = new Vector2(pmPosition.X + 1f, pmPosition.Y);
+                }
+                if (pmDirection == 'S')
+                {
+                    DisableS = true;
+                    pmPosition = new Vector2(pmPosition.X, pmPosition.Y - 1f);
+                }
+                if (pmDirection == 'D')
+                {
+                    DisableD = true;
+                    pmPosition = new Vector2(pmPosition.X - 1f, pmPosition.Y);
                 }
             }
 
             var state = Keyboard.GetState();
 
-            if (state.IsKeyDown(Keys.W) && pmDisable != 'W')
+            if (state.IsKeyDown(Keys.W) && !DisableW)
             {
                 pmSpeed = new Vector2(0, -2.0f);
                 pmDirection = 'W';
-                if (pmDisable == 'S')
-                {
-                    pmDisable = ' ';
-                }
+                if (DisableS) DisableS = false;
             }
-            else if (state.IsKeyDown(Keys.D) && pmDisable != 'D')
+            else if (state.IsKeyDown(Keys.D) && !DisableD)
             {
                 pmSpeed = new Vector2(2.0f, 0);
                 pmDirection = 'D';
-                if (pmDisable == 'A')
-                {
-                    pmDisable = ' ';
-                }
+                if (DisableA) DisableA = false;
             }
-            else if (state.IsKeyDown(Keys.A) && pmDisable != 'A')
+            else if (state.IsKeyDown(Keys.A) && !DisableA)
             {
                 pmSpeed = new Vector2(-2.0f, 0);
                 pmDirection = 'A';
-                if (pmDisable == 'D')
-                {
-                    pmDisable = ' ';
-                }
+                if (DisableD) DisableD = false;
             }
-            else if (state.IsKeyDown(Keys.S) && pmDisable != 'S')
+            else if (state.IsKeyDown(Keys.S) && !DisableS)
             {
                 pmSpeed = new Vector2(0, 2.0f);
                 pmDirection = 'S';
-                if (pmDisable == 'W')
-                {
-                    pmDisable = ' ';
-                }
+                if (DisableW) DisableW = false;
             }
             else
             {
