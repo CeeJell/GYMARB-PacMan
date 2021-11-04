@@ -93,7 +93,7 @@ namespace GYMARB_PacMan
                 }
                 if (pmDirection == 'D')
                 {
-                    DisableD = true;
+                   DisableD = true;
                     pmPosition = new Vector2(pmPosition.X - 1f, pmPosition.Y);
                 }
             }
