@@ -14,12 +14,14 @@ namespace GYMARB_PacMan
         Vector2 pmPosition;
         Vector2 pmSpeed;
         Texture2D test;
+        /*
         bool Hit;
         char pmDirection;
         bool DisableW;
         bool DisableA;
         bool DisableS;
         bool DisableD;
+        */
 
         public Game1()
         {
@@ -42,6 +44,12 @@ namespace GYMARB_PacMan
             base.Initialize();
         }
 
+        protected bool IsTouchingLeft(Sprite sprite)
+        {
+
+        }
+
+
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -53,7 +61,7 @@ namespace GYMARB_PacMan
             // TODO: use this.Content to load your game content here
         }
 
-
+        /*
         protected void Disable()
         {
             DisableW = true;
@@ -61,7 +69,7 @@ namespace GYMARB_PacMan
             DisableS = true;
             DisableD = true;
         }
-
+        
 
         protected void ifHit(char direction)
         {
@@ -99,7 +107,7 @@ namespace GYMARB_PacMan
             }
         }
 
-
+        */
 
         protected override void Update(GameTime gameTime)
         {
@@ -116,81 +124,32 @@ namespace GYMARB_PacMan
 
             var state = Keyboard.GetState();
 
-            if (state.IsKeyDown(Keys.W) && !DisableW)
+            if (state.IsKeyDown(Keys.W))
             {
                 pmSpeed = new Vector2(0, -2.0f);
-                pmDirection = 'W';
-                if (DisableS) DisableS = false;
-                if (DisableD) DisableD = false;
-                if (DisableA) DisableA = false;
-                if (Hit)
-                {
-                    ifHit(pmDirection);
-                }
+
             }
-            else if (state.IsKeyDown(Keys.D) && !DisableD)
+            else if (state.IsKeyDown(Keys.D))
             {
                 pmSpeed = new Vector2(2.0f, 0);
-                pmDirection = 'D';
-                if (DisableA) DisableA = false;
-                if (DisableS) DisableS = false;
-                if (DisableW) DisableW = false;
-                if (Hit)
-                {
-                    ifHit(pmDirection);
-                }
+
             }
-            else if (state.IsKeyDown(Keys.A) && !DisableA)
+            else if (state.IsKeyDown(Keys.A))
             {
                 pmSpeed = new Vector2(-2.0f, 0);
-                pmDirection = 'A';
-                if (DisableD) DisableD = false;
-                if (DisableS) DisableS = false;
-                if (DisableW) DisableW = false;
-                if (Hit)
-                {
-                    ifHit(pmDirection);
-                }
+
             }
-            else if (state.IsKeyDown(Keys.S) && !DisableS)
+            else if (state.IsKeyDown(Keys.S))
             {
                 pmSpeed = new Vector2(0, 2.0f);
-                pmDirection = 'S';
-                if (DisableW) DisableW = false;
-                if (DisableD) DisableD = false;
-                if (DisableA) DisableA = false;
-                if (Hit)
-                {
-                    ifHit(pmDirection);
-                }
+
             }
             else
             {
                 pmSpeed = new Vector2(0, 0);
             }
-
-            if (Hit) ifHit(pmDirection);
-
-
-            //kollision
-
-            Rectangle pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, pmTexture.Width, pmTexture.Height);
-            Rectangle testBox = new Rectangle((int)200, (int)200, 512, 512);
-
-            var kollision = Intersection(pmBox, testBox);
-
-            if (kollision.Width > 0 && kollision.Height > 0)
-            {
-                Rectangle r1 = Normalize(pmBox, kollision);
-                Rectangle r2 = Normalize(testBox, kollision);
-                Hit = TestCollision(pmTexture, r1, test, r2);
-
-            }
-
-
-
-            base.Update(gameTime);
         }
+
 
         protected override void Draw(GameTime gameTime)
         {
@@ -220,48 +179,6 @@ namespace GYMARB_PacMan
 
 
 
-        public static Rectangle Intersection(Rectangle r1, Rectangle r2)
-        {
-            int x1 = Math.Max(r1.Left, r2.Left);
-            int y1 = Math.Max(r1.Top, r2.Top);
-            int x2 = Math.Min(r1.Right, r2.Right);
-            int y2 = Math.Min(r1.Bottom, r2.Bottom);
-
-            if ((x2 >= x1) && (y2 >= y1))
-            {
-                return new Rectangle(x1, y1, x2 - x1, y2 - y1);
-            }
-            return Rectangle.Empty;
-        }
-        public static Rectangle Normalize(Rectangle reference, Rectangle overlap)
-        {
-            //Räkna ut en rektangel som kan användas relativt till referensrektangeln
-            return new Rectangle(
-              overlap.X - reference.X,
-              overlap.Y - reference.Y,
-              overlap.Width,
-              overlap.Height);
-        }
-        public static bool TestCollision(Texture2D t1, Rectangle r1, Texture2D t2, Rectangle r2)
-        {
-            //Beräkna hur många pixlar som finns i området som ska undersökas
-            int pixelCount = r1.Width * r1.Height;
-            uint[] texture1Pixels = new uint[pixelCount];
-            uint[] texture2Pixels = new uint[pixelCount];
-
-            //Kopiera ut pixlarna från båda områdena
-            t1.GetData(0, r1, texture1Pixels, 0, pixelCount);
-            t2.GetData(0, r2, texture2Pixels, 0, pixelCount);
-
-            //Jämför om vi har några pixlar som överlappar varandra i områdena
-            for (int i = 0; i < pixelCount; ++i)
-            {
-                if (((texture1Pixels[i] & 0xff000000) > 0) && ((texture2Pixels[i] & 0xff000000) > 0))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+      
     }
 }
