@@ -59,8 +59,8 @@ namespace GYMARB_PacMan
                         Down = Keys.S,
                     },
                     Position = new Vector2(100, 100),
-                    Colour = Color.Yellow,
-                    Speed = 5f,
+                    Colour = Color.White,
+                    Speed = 3f,
                 },
                 new Player(test)
                 {
