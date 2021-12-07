@@ -12,8 +12,6 @@ namespace GYMARB_PacMan
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         Texture2D pmTexture;
-        Vector2 pmPosition;
-        Vector2 pmSpeed;
         Texture2D test;
 
         private List<Sprite> _sprites;
