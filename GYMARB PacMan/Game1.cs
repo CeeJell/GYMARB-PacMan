@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GYMARB_PacMan.Models.Sprites;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -14,14 +15,9 @@ namespace GYMARB_PacMan
         Vector2 pmPosition;
         Vector2 pmSpeed;
         Texture2D test;
-        /*
-        bool Hit;
-        char pmDirection;
-        bool DisableW;
-        bool DisableA;
-        bool DisableS;
-        bool DisableD;
-        */
+
+        private List<Sprite> _sprites;
+
 
         public Game1()
         {
@@ -32,7 +28,7 @@ namespace GYMARB_PacMan
 
         protected override void Initialize()
         {
-            pmPosition = new Vector2(300, 200);
+
 
 
 
@@ -51,60 +47,40 @@ namespace GYMARB_PacMan
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             pmTexture = Content.Load<Texture2D>("Pacman");
-
-
             test = Content.Load<Texture2D>("Test");
 
-            // TODO: use this.Content to load your game content here
+            _sprites = new List<Sprite>()
+            {
+                new Player(pmTexture)
+                {
+                    Input = new Models.Input()
+                    {
+                        Left = Keys.A,
+                        Right = Keys.D,
+                        Up = Keys.W,
+                        Down = Keys.S,
+                    },
+                    Position = new Vector2(100, 100),
+                    Colour = Color.Yellow,
+                    Speed = 3f,
+                },
+                new Player(test)
+                {
+                    Input = new Models.Input()
+                    {
+                        Left = Keys.Left,
+                        Right = Keys.Right,
+                        Up = Keys.Up,
+                        Down = Keys.Down,
+                    },
+                    Position = new Vector2(300, 300),
+                    Colour = Color.Red,
+                    Speed = 3f,
+                },
+            };
         }
 
-        /*
-        protected void Disable()
-        {
-            DisableW = true;
-            DisableA = true;
-            DisableS = true;
-            DisableD = true;
-        }
         
-
-        protected void ifHit(char direction)
-        {
-            if (direction == 'W')
-            {
-                Disable();
-                pmPosition = new Vector2(pmPosition.X, pmPosition.Y + 10f);
-                DisableA = false;
-                DisableS = false;
-                DisableD = false;
-            }
-            if (direction == 'A')
-            {
-                Disable();
-                pmPosition = new Vector2(pmPosition.X + 10f, pmPosition.Y);
-                DisableW = false;
-                DisableS = false;
-                DisableD = false;
-            }
-            if (direction == 'S')
-            {
-                Disable();
-                pmPosition = new Vector2(pmPosition.X, pmPosition.Y - 10f);
-                DisableW = false;
-                DisableA = false;
-                DisableD = false;
-            }
-            if (direction == 'D')
-            {
-                Disable();
-                pmPosition = new Vector2(pmPosition.X - 10f, pmPosition.Y);
-                DisableW = false;
-                DisableA = false;
-                DisableS = false;
-            }
-        }
-
-        */
 
         protected override void Update(GameTime gameTime)
         {
@@ -112,39 +88,12 @@ namespace GYMARB_PacMan
                 Exit();
 
 
+            foreach (var sprite in _sprites)
+                sprite.Update(gameTime, _sprites);
 
-            // Pacmans rörelse
-
-            pmPosition += pmSpeed;
+            base.Update(gameTime);
 
 
-
-            var state = Keyboard.GetState();
-
-            if (state.IsKeyDown(Keys.W))
-            {
-                pmSpeed = new Vector2(0, -2.0f);
-
-            }
-            else if (state.IsKeyDown(Keys.D))
-            {
-                pmSpeed = new Vector2(2.0f, 0);
-
-            }
-            else if (state.IsKeyDown(Keys.A))
-            {
-                pmSpeed = new Vector2(-2.0f, 0);
-
-            }
-            else if (state.IsKeyDown(Keys.S))
-            {
-                pmSpeed = new Vector2(0, 2.0f);
-
-            }
-            else
-            {
-                pmSpeed = new Vector2(0, 0);
-            }
         }
 
 
@@ -153,8 +102,10 @@ namespace GYMARB_PacMan
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-            spriteBatch.Draw(pmTexture, pmPosition, Color.White);
-            spriteBatch.Draw(test, new Vector2 (200,200), Color.White);
+            foreach (var sprite in _sprites)
+            {
+                sprite.Draw(spriteBatch);
+            }
             spriteBatch.End();
 
 
