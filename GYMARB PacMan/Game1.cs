@@ -39,7 +39,7 @@ namespace GYMARB_PacMan
         }
 
 
-
+        
 
         protected override void LoadContent()
         {
@@ -66,14 +66,14 @@ namespace GYMARB_PacMan
                 {
                     Input = new Models.Input()
                     {
-                        Left = Keys.Left,
-                        Right = Keys.Right,
-                        Up = Keys.Up,
-                        Down = Keys.Down,
+                        Left = Keys.O,
+                        Right = Keys.O,
+                        Up = Keys.O,
+                        Down = Keys.O,
                     },
                     Position = new Vector2(300, 300),
                     Colour = Color.Red,
-                    Speed = 3f,
+                    Speed = 0f,
                 },
             };
         }
