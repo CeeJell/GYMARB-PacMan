@@ -60,7 +60,7 @@ namespace GYMARB_PacMan
                     },
                     Position = new Vector2(100, 100),
                     Colour = Color.Yellow,
-                    Speed = 3f,
+                    Speed = 5f,
                 },
                 new Player(test)
                 {
@@ -72,6 +72,19 @@ namespace GYMARB_PacMan
                         Down = Keys.O,
                     },
                     Position = new Vector2(300, 300),
+                    Colour = Color.Red,
+                    Speed = 0f,
+                },
+                new Player(test)
+                {
+                    Input = new Models.Input()
+                    {
+                        Left = Keys.O,
+                        Right = Keys.O,
+                        Up = Keys.O,
+                        Down = Keys.O,
+                    },
+                    Position = new Vector2(400, 200),
                     Colour = Color.Red,
                     Speed = 0f,
                 },
