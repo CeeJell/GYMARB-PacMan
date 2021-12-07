@@ -44,10 +44,7 @@ namespace GYMARB_PacMan
             base.Initialize();
         }
 
-        protected bool IsTouchingLeft(Sprite sprite)
-        {
 
-        }
 
 
         protected override void LoadContent()
