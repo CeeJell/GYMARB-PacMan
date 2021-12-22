@@ -12,11 +12,16 @@ namespace GYMARB_PacMan
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         Texture2D pmTexture;
+        Texture2D coinTexture;
+        Vector2 coinPosition = new Vector2(200, 20);
+
         Texture2D test;
+
         SpriteFont font;
         int points = 0;
 
         private List<Wall> _walls;
+        private List<Vector2> coins;
 
 
         public Game1()
@@ -29,7 +34,7 @@ namespace GYMARB_PacMan
         protected override void Initialize()
         {
 
-
+            coins = new List<Vector2>();
 
 
 
@@ -47,6 +52,7 @@ namespace GYMARB_PacMan
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             pmTexture = Content.Load<Texture2D>("Pacman");
+            coinTexture = Content.Load<Texture2D>("Coin");
             test = Content.Load<Texture2D>("Test");
             font = Content.Load<SpriteFont>("font");
 
@@ -92,6 +98,9 @@ namespace GYMARB_PacMan
                     Speed = 0f,
                 },
             };
+
+            coins.Add(new Vector2(coinPosition.X, coinPosition.Y));
+
         }
 
         
@@ -117,11 +126,16 @@ namespace GYMARB_PacMan
 
             spriteBatch.Begin();
 
+            foreach (var coin in coins)
+            {
+                spriteBatch.Draw(coinTexture, coin, Color.White);
+            }
+
             spriteBatch.DrawString(font, points.ToString(), new Vector2(10, 20), Color.White);
 
-            foreach (var sprite in _walls)
+            foreach (var wall in _walls)
             {
-                sprite.Draw(spriteBatch);
+                wall.Draw(spriteBatch);
             }
             spriteBatch.End();
 
