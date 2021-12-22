@@ -1,30 +1,35 @@
-﻿using GYMARB_PacMan.Models.Sprites;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
-namespace GYMARB_PacMan
+namespace GYMARB_Test
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+
         Texture2D pmTexture;
-        Vector2 pmPosition;
+        Vector2 pmPosition = new Vector2(100, 100);
+        Rectangle pmBox;
+        float pmSpeed = 3f;
+        Vector2 pmVelocity;
+
         Texture2D coinTexture;
         Vector2 coinPosition = new Vector2(200, 20);
-        public Rectangle coinBox;
+        Rectangle coinBox;
 
-        Texture2D test;
+        Texture2D testTexture;
+        Rectangle testBox1;
+        Rectangle testBox2;
 
         SpriteFont font;
         int points = 0;
 
-        private List<Wall> _walls;
         private List<Vector2> coins;
-
+        private List<Rectangle> walls;
 
         public Game1()
         {
@@ -35,8 +40,8 @@ namespace GYMARB_PacMan
 
         protected override void Initialize()
         {
-
             coins = new List<Vector2>();
+            walls = new List<Rectangle>();
 
 
 
@@ -47,91 +52,87 @@ namespace GYMARB_PacMan
             base.Initialize();
         }
 
-
-        
-
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             pmTexture = Content.Load<Texture2D>("Pacman");
             coinTexture = Content.Load<Texture2D>("Coin");
-            test = Content.Load<Texture2D>("Test");
+            testTexture = Content.Load<Texture2D>("Test");
             font = Content.Load<SpriteFont>("font");
 
-            _walls = new List<Wall>()
-            {
-                new Player(pmTexture)
-                {
-                    Input = new Models.Input()
-                    {
-                        Left = Keys.A,
-                        Right = Keys.D,
-                        Up = Keys.W,
-                        Down = Keys.S,
-                    },
-                    Position = new Vector2(100, 100),
-                    Colour = Color.White,
-                    Speed = 3f,
-                },
-                new Player(test)
-                {
-                    Input = new Models.Input()
-                    {
-                        Left = Keys.O,
-                        Right = Keys.O,
-                        Up = Keys.O,
-                        Down = Keys.O,
-                    },
-                    Position = new Vector2(300, 300),
-                    Colour = Color.Red,
-                    Speed = 0f,
-                },
-                new Player(test)
-                {
-                    Input = new Models.Input()
-                    {
-                        Left = Keys.O,
-                        Right = Keys.O,
-                        Up = Keys.O,
-                        Down = Keys.O,
-                    },
-                    Position = new Vector2(400, 200),
-                    Colour = Color.Red,
-                    Speed = 0f,
-                },
-            };
+
 
             coins.Add(new Vector2(coinPosition.X, coinPosition.Y));
             coinBox = new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5);
 
+            testBox1 = new Rectangle(300, 300, 250, 250);
+
+        }
+
+        bool TouchingLeft()
+        {
+            return pmBox.Right + pmVelocity.X > testBox1.Left &&
+                pmBox.Left < testBox1.Left &&
+                pmBox.Bottom > testBox1.Top &&
+                pmBox.Top < testBox1.Bottom;
+        }
+        bool TouchingRight()
+        {
+            return pmBox.Left + pmVelocity.X < testBox1.Right &&
+                pmBox.Right > testBox1.Right &&
+                pmBox.Bottom > testBox1.Top &&
+                pmBox.Top < testBox1.Bottom;
+        }
+        bool TouchingTop()
+        {
+            return pmBox.Bottom + pmVelocity.Y > testBox1.Top &&
+                pmBox.Top < testBox1.Top &&
+                pmBox.Right > testBox1.Left &&
+                pmBox.Left < testBox1.Right;
+        }
+        bool TouchingBottom()
+        {
+            return pmBox.Top + pmVelocity.Y < testBox1.Bottom &&
+                pmBox.Bottom > testBox1.Bottom &&
+                pmBox.Right > testBox1.Left &&
+                pmBox.Left < testBox1.Right;
         }
 
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 15, 15);
 
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+                pmVelocity.X = -pmSpeed;
+            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                pmVelocity.X = pmSpeed;
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+                pmVelocity.Y = -pmSpeed;
+            else if (Keyboard.GetState().IsKeyDown(Keys.S))
+                pmVelocity.Y = pmSpeed;
 
-            foreach (var sprite in _walls)
-                sprite.Update(gameTime, _walls);
+            if (pmVelocity.X > 0 && TouchingLeft() || pmVelocity.X < 0 && TouchingRight())
+                pmVelocity.X = 0;
+            if (pmVelocity.Y > 0 && TouchingTop() || pmVelocity.Y < 0 && TouchingBottom())
+                pmVelocity.Y = 0;
 
-            
+            pmPosition += pmVelocity;
+            pmVelocity = Vector2.Zero;
+
 
             base.Update(gameTime);
-
-
-
-
-
         }
-
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.DarkGray);
 
             spriteBatch.Begin();
+
+            spriteBatch.Draw(pmTexture, pmPosition, Color.White);
+
+            spriteBatch.Draw(testTexture, new Vector2(300, 300), Color.Red);
 
             foreach (var coin in coins)
             {
@@ -140,22 +141,9 @@ namespace GYMARB_PacMan
 
             spriteBatch.DrawString(font, points.ToString(), new Vector2(10, 20), Color.White);
 
-            foreach (var wall in _walls)
-            {
-                wall.Draw(spriteBatch);
-            }
             spriteBatch.End();
-
-
-
-
-
-
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }
-
-      
     }
 }
