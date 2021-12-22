@@ -12,8 +12,10 @@ namespace GYMARB_PacMan
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         Texture2D pmTexture;
+        Vector2 pmPosition;
         Texture2D coinTexture;
         Vector2 coinPosition = new Vector2(200, 20);
+        public Rectangle coinBox;
 
         Texture2D test;
 
@@ -100,10 +102,10 @@ namespace GYMARB_PacMan
             };
 
             coins.Add(new Vector2(coinPosition.X, coinPosition.Y));
+            coinBox = new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5);
 
         }
 
-        
 
         protected override void Update(GameTime gameTime)
         {
@@ -114,7 +116,12 @@ namespace GYMARB_PacMan
             foreach (var sprite in _walls)
                 sprite.Update(gameTime, _walls);
 
+            
+
             base.Update(gameTime);
+
+
+
 
 
         }
@@ -148,15 +155,6 @@ namespace GYMARB_PacMan
 
             base.Draw(gameTime);
         }
-
-
-
-
-
-
-
-
-
 
       
     }

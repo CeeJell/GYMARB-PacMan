@@ -17,6 +17,8 @@ namespace GYMARB_PacMan.Models.Sprites
         public Color Colour = Color.White;
         public float Speed;
         public Input Input;
+        
+        
 
         public Rectangle Rectangle
         {
@@ -69,6 +71,14 @@ namespace GYMARB_PacMan.Models.Sprites
                 this.Rectangle.Bottom > wall.Rectangle.Bottom &&
                 this.Rectangle.Right > wall.Rectangle.Left &&
                 this.Rectangle.Left < wall.Rectangle.Right;
+        }
+
+        protected bool Collect(Wall coinBox)
+        {
+            return this.Rectangle.Top + this.Velocity.Y < coinBox.Rectangle.Bottom &&
+                this.Rectangle.Bottom > coinBox.Rectangle.Bottom &&
+                this.Rectangle.Right > coinBox.Rectangle.Left &&
+                this.Rectangle.Left < coinBox.Rectangle.Right;
         }
     }
 }
