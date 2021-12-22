@@ -13,8 +13,10 @@ namespace GYMARB_PacMan
         private SpriteBatch spriteBatch;
         Texture2D pmTexture;
         Texture2D test;
+        SpriteFont font;
+        int points = 0;
 
-        private List<Sprite> _sprites;
+        private List<Wall> _walls;
 
 
         public Game1()
@@ -46,8 +48,9 @@ namespace GYMARB_PacMan
             spriteBatch = new SpriteBatch(GraphicsDevice);
             pmTexture = Content.Load<Texture2D>("Pacman");
             test = Content.Load<Texture2D>("Test");
+            font = Content.Load<SpriteFont>("font");
 
-            _sprites = new List<Sprite>()
+            _walls = new List<Wall>()
             {
                 new Player(pmTexture)
                 {
@@ -99,8 +102,8 @@ namespace GYMARB_PacMan
                 Exit();
 
 
-            foreach (var sprite in _sprites)
-                sprite.Update(gameTime, _sprites);
+            foreach (var sprite in _walls)
+                sprite.Update(gameTime, _walls);
 
             base.Update(gameTime);
 
@@ -113,7 +116,10 @@ namespace GYMARB_PacMan
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-            foreach (var sprite in _sprites)
+
+            spriteBatch.DrawString(font, points.ToString(), new Vector2(10, 20), Color.White);
+
+            foreach (var sprite in _walls)
             {
                 sprite.Draw(spriteBatch);
             }

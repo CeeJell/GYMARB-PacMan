@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GYMARB_PacMan.Models.Sprites
 {
-    public class Player : Sprite
+    public class Player : Wall
     {
         public Player(Texture2D texture)
             : base(texture)
@@ -15,7 +15,7 @@ namespace GYMARB_PacMan.Models.Sprites
 
         }
 
-        public override void Update(GameTime gametime, List<Sprite> sprites)
+        public override void Update(GameTime gametime, List<Wall> sprites)
         {
             Move();
 
