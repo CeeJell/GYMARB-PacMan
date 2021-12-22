@@ -43,7 +43,6 @@ namespace GYMARB_PacMan.Models.Sprites
                 Velocity.X = -Speed;
             else if (Keyboard.GetState().IsKeyDown(Input.Right))
                 Velocity.X = Speed;
-
             if (Keyboard.GetState().IsKeyDown(Input.Up))
                 Velocity.Y = -Speed;
             else if (Keyboard.GetState().IsKeyDown(Input.Down))
