@@ -117,7 +117,7 @@ namespace GYMARB_PacMan
 
         protected override void Update(GameTime gameTime)
         {
-            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 15, 15);
+            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 20, 20);
 
             
 
