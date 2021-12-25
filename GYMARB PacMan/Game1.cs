@@ -62,6 +62,8 @@ namespace GYMARB_PacMan
 
 
             coins.Add (new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5));
+            coinPosition.X += 200;
+            coins.Add(new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5));
 
             wall = new Rectangle(300, 300, 250, 250);
 
