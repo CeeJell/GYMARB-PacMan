@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
-namespace GYMARB_Test
+namespace GYMARB_PacMan
 {
     public class Game1 : Game
     {
@@ -19,7 +19,6 @@ namespace GYMARB_Test
 
         Texture2D coinTexture;
         Vector2 coinPosition = new Vector2(200, 20);
-        Rectangle coinBox;
 
         Texture2D testTexture;
         Rectangle testBox1;
@@ -28,7 +27,7 @@ namespace GYMARB_Test
         SpriteFont font;
         int points = 0;
 
-        private List<Vector2> coins;
+        private List<Rectangle> coins;
         private List<Rectangle> walls;
 
         public Game1()
@@ -40,7 +39,7 @@ namespace GYMARB_Test
 
         protected override void Initialize()
         {
-            coins = new List<Vector2>();
+            coins = new List<Rectangle>();
             walls = new List<Rectangle>();
 
 
@@ -62,46 +61,69 @@ namespace GYMARB_Test
 
 
 
-            coins.Add(new Vector2(coinPosition.X, coinPosition.Y));
-            coinBox = new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5);
+
+            coins.Add (new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5));
 
             testBox1 = new Rectangle(300, 300, 250, 250);
 
         }
+        
+        bool TouchingLeft(Rectangle touch)
+        {
+            return pmBox.Right + pmVelocity.X > touch.Left &&
+                pmBox.Left < touch.Left &&
+                pmBox.Bottom > touch.Top &&
+                pmBox.Top < touch.Bottom;
+        }
+        bool TouchingRight(Rectangle touch)
+        {
+            return pmBox.Left + pmVelocity.X < touch.Right &&
+                pmBox.Right > touch.Right &&
+                pmBox.Bottom > touch.Top &&
+                pmBox.Top < touch.Bottom;
+        }
+        bool TouchingTop(Rectangle touch)
+        {
+            return pmBox.Bottom + pmVelocity.Y > touch.Top &&
+                pmBox.Top < touch.Top &&
+                pmBox.Right > touch.Left &&
+                pmBox.Left < touch.Right;
+        }
+        bool TouchingBottom(Rectangle touch)
+        {
+            return pmBox.Top + pmVelocity.Y < touch.Bottom &&
+                pmBox.Bottom > touch.Bottom &&
+                pmBox.Right > touch.Left &&
+                pmBox.Left < touch.Right;
+        }
 
-        bool TouchingLeft()
+        bool Collected(Rectangle coin)
         {
-            return pmBox.Right + pmVelocity.X > testBox1.Left &&
-                pmBox.Left < testBox1.Left &&
-                pmBox.Bottom > testBox1.Top &&
-                pmBox.Top < testBox1.Bottom;
+            return pmBox.Right - coin.Left > 5 &&
+                pmBox.Left - coin.Right < 5 &&
+                pmBox.Top - coin.Bottom < 5 &&
+                pmBox.Bottom - coin.Top > 5;
         }
-        bool TouchingRight()
+        
+        public static Rectangle Intersection(Rectangle r1, Rectangle r2)
         {
-            return pmBox.Left + pmVelocity.X < testBox1.Right &&
-                pmBox.Right > testBox1.Right &&
-                pmBox.Bottom > testBox1.Top &&
-                pmBox.Top < testBox1.Bottom;
-        }
-        bool TouchingTop()
-        {
-            return pmBox.Bottom + pmVelocity.Y > testBox1.Top &&
-                pmBox.Top < testBox1.Top &&
-                pmBox.Right > testBox1.Left &&
-                pmBox.Left < testBox1.Right;
-        }
-        bool TouchingBottom()
-        {
-            return pmBox.Top + pmVelocity.Y < testBox1.Bottom &&
-                pmBox.Bottom > testBox1.Bottom &&
-                pmBox.Right > testBox1.Left &&
-                pmBox.Left < testBox1.Right;
-        }
+            int x1 = Math.Max(r1.Left, r2.Left);
+            int y1 = Math.Max(r1.Top, r2.Top);
+            int x2 = Math.Min(r1.Right, r2.Right);
+            int y2 = Math.Min(r1.Bottom, r2.Bottom);
 
+            if ((x2 >= x1) && (y2 >= y1))
+        {
+            return new Rectangle(x1, y1, x2 - x1, y2 - y1);
+        }
+            return Rectangle.Empty;
+        }
 
         protected override void Update(GameTime gameTime)
         {
             pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 15, 15);
+
+            
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
                 pmVelocity.X = -pmSpeed;
@@ -112,13 +134,28 @@ namespace GYMARB_Test
             else if (Keyboard.GetState().IsKeyDown(Keys.S))
                 pmVelocity.Y = pmSpeed;
 
-            if (pmVelocity.X > 0 && TouchingLeft() || pmVelocity.X < 0 && TouchingRight())
+            if (pmVelocity.X > 0 && TouchingLeft(testBox1) || pmVelocity.X < 0 && TouchingRight(testBox1))
                 pmVelocity.X = 0;
-            if (pmVelocity.Y > 0 && TouchingTop() || pmVelocity.Y < 0 && TouchingBottom())
+            if (pmVelocity.Y > 0 && TouchingTop(testBox1) || pmVelocity.Y < 0 && TouchingBottom(testBox1))
                 pmVelocity.Y = 0;
 
             pmPosition += pmVelocity;
             pmVelocity = Vector2.Zero;
+
+
+            foreach (var coin in coins)
+            {
+                if (pmBox.Intersects(coin))
+                {
+                    points++;
+                    coinPosition = new Vector2(-2, -2);
+                }
+            }
+
+
+
+
+
 
 
             base.Update(gameTime);
