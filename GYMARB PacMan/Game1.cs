@@ -137,9 +137,7 @@ namespace GYMARB_PacMan
 
 
 
-
-            for (int i = coins.Count - 1; i >= 0; i--)
-            {
+            int i = 0;
                 foreach (var coin in coins)
                 {
                     if (pmBox.Intersects(coin))
@@ -148,8 +146,9 @@ namespace GYMARB_PacMan
                         coins.RemoveAt(i);
                         break;
                     }
+                i++;
                 }
-            }
+            i = 0;
 
 
 
