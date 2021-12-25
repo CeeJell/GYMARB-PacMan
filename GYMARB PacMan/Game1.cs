@@ -60,12 +60,15 @@ namespace GYMARB_PacMan
 
 
 
+            for (int i = 0; i < 20; i++)
+            {
+                coins.Add(new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5));
+                coinPosition.X += 20;
+            }
 
-            coins.Add (new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5));
-            coinPosition.X += 200;
-            coins.Add(new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5));
 
-            wall = new Rectangle(300, 300, 250, 250);
+
+            wall = new Rectangle(300, 300, testTexture.Width, testTexture.Height);
 
         }
         
