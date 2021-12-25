@@ -21,9 +21,7 @@ namespace GYMARB_PacMan
         Vector2 coinPosition = new Vector2(200, 20);
 
         Texture2D testTexture;
-        Rectangle testBox1;
-        Rectangle testBox2;
-
+        Rectangle wall;
         SpriteFont font;
         int points = 0;
 
@@ -36,6 +34,7 @@ namespace GYMARB_PacMan
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
+
 
         protected override void Initialize()
         {
@@ -64,7 +63,7 @@ namespace GYMARB_PacMan
 
             coins.Add (new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5));
 
-            testBox1 = new Rectangle(300, 300, 250, 250);
+            wall = new Rectangle(300, 300, 250, 250);
 
         }
         
@@ -96,14 +95,6 @@ namespace GYMARB_PacMan
                 pmBox.Right > touch.Left &&
                 pmBox.Left < touch.Right;
         }
-
-        bool Collected(Rectangle coin)
-        {
-            return pmBox.Right - coin.Left > 5 &&
-                pmBox.Left - coin.Right < 5 &&
-                pmBox.Top - coin.Bottom < 5 &&
-                pmBox.Bottom - coin.Top > 5;
-        }
         
         public static Rectangle Intersection(Rectangle r1, Rectangle r2)
         {
@@ -134,25 +125,29 @@ namespace GYMARB_PacMan
             else if (Keyboard.GetState().IsKeyDown(Keys.S))
                 pmVelocity.Y = pmSpeed;
 
-            if (pmVelocity.X > 0 && TouchingLeft(testBox1) || pmVelocity.X < 0 && TouchingRight(testBox1))
+            if (pmVelocity.X > 0 && TouchingLeft(wall) || pmVelocity.X < 0 && TouchingRight(wall))
                 pmVelocity.X = 0;
-            if (pmVelocity.Y > 0 && TouchingTop(testBox1) || pmVelocity.Y < 0 && TouchingBottom(testBox1))
+            if (pmVelocity.Y > 0 && TouchingTop(wall) || pmVelocity.Y < 0 && TouchingBottom(wall))
                 pmVelocity.Y = 0;
 
             pmPosition += pmVelocity;
             pmVelocity = Vector2.Zero;
 
 
-            foreach (var coin in coins)
+
+
+            for (int i = coins.Count - 1; i >= 0; i--)
             {
-                if (pmBox.Intersects(coin))
+                foreach (var coin in coins)
                 {
-                    points++;
-                    coinPosition = new Vector2(-2, -2);
+                    if (pmBox.Intersects(coin))
+                    {
+                        points++;
+                        coins.RemoveAt(i);
+                        break;
+                    }
                 }
             }
-
-
 
 
 
