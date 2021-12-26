@@ -24,12 +24,17 @@ namespace GYMARB_PacMan
         Texture2D coinTexture;
         Vector2 coinPosition = new Vector2(200, 20);
 
+        Texture2D powerTexture;
+        Vector2 powerPosition = new Vector2(200, 100);
+        double powerTimer = 0;
+
         Texture2D testTexture;
         Vector2 wallPosition = new Vector2(300, 300);
         SpriteFont font;
         int points = 0;
 
         private List<Rectangle> coins;
+        private List<Rectangle> powers;
         private List<Rectangle> walls;
 
         public Game1()
@@ -43,6 +48,7 @@ namespace GYMARB_PacMan
         protected override void Initialize()
         {
             coins = new List<Rectangle>();
+            powers = new List<Rectangle>();
             walls = new List<Rectangle>();
 
 
@@ -60,6 +66,7 @@ namespace GYMARB_PacMan
             pmTexture = Content.Load<Texture2D>("Pacman");
             gRedTexture = Content.Load<Texture2D>("GhostRed");
             coinTexture = Content.Load<Texture2D>("Coin");
+            powerTexture = Content.Load<Texture2D>("PowerUp");
             testTexture = Content.Load<Texture2D>("Test");
             font = Content.Load<SpriteFont>("font");
 
@@ -71,7 +78,11 @@ namespace GYMARB_PacMan
                 coinPosition.X += 20;
             }
 
-
+            for (int i = 0; i < 2; i++)
+            {
+                powers.Add(new Rectangle((int)powerPosition.X, (int)powerPosition.Y, 11, 11));
+                powerPosition.X += 20;
+            }
             
             walls.Add(new Rectangle((int)wallPosition.X, (int)wallPosition.Y, testTexture.Width, testTexture.Height));
             wallPosition = new Vector2(350, 350);
@@ -137,28 +148,57 @@ namespace GYMARB_PacMan
             pmPosition += pmVelocity;
             pmVelocity = Vector2.Zero;
 
-            int i = 0;
+            int c = 0;
             foreach (var coin in coins)
             {
                 if (TouchingLeft(coin) || TouchingRight(coin) || TouchingTop(coin) || TouchingBottom(coin))
                 {
                     points++;
-                    coins.RemoveAt(i);
+                    coins.RemoveAt(c);
                     break;
                 }
-                i++;
+                c++;
             }
-            i = 0;
+            c = 0;
 
 
-            if (TouchingLeft(gRedBox) || TouchingRight(gRedBox) || TouchingTop(gRedBox) || TouchingBottom(gRedBox))
+            int p = 0;
+            foreach (var power in powers)
+            {
+                if (TouchingLeft(power) || TouchingRight(power) || TouchingTop(power) || TouchingBottom(power))
                 {
-                pmPosition.Y -= 100;
+                    powerTimer = 60 * 10;
+                    powers.RemoveAt(p);
+                    break;
                 }
+                p++;
+            }
+            p = 0;
+
+            
+            if(powerTimer > 0)
+            {
+                if (TouchingLeft(gRedBox) || TouchingRight(gRedBox) || TouchingTop(gRedBox) || TouchingBottom(gRedBox))
+                {
+                    gRedPosition.Y -= 50;
+                }
+            }
+
+            else
+            {
+                if (TouchingLeft(gRedBox) || TouchingRight(gRedBox) || TouchingTop(gRedBox) || TouchingBottom(gRedBox))
+                {
+                    pmPosition.Y -= 100;
+                }
+            }
 
 
 
 
+            if (powerTimer > 0)
+            {
+                powerTimer -= 1;
+            }
 
             base.Update(gameTime);
         }
@@ -176,6 +216,10 @@ namespace GYMARB_PacMan
                 spriteBatch.Draw(testTexture, wall, Color.Red);
             }
 
+            foreach (var power in powers)
+            {
+                spriteBatch.Draw(powerTexture, power, Color.White);
+            }
 
             foreach (var coin in coins)
             {
@@ -183,6 +227,8 @@ namespace GYMARB_PacMan
             }
 
             spriteBatch.DrawString(font, points.ToString(), new Vector2(10, 20), Color.White);
+
+            spriteBatch.DrawString(font, powerTimer.ToString(), new Vector2(30, 20), Color.White);
 
             spriteBatch.Draw(gRedTexture, gRedPosition, Color.White);
 
