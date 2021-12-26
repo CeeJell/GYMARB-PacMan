@@ -151,6 +151,12 @@ namespace GYMARB_PacMan
             i = 0;
 
 
+            if (TouchingLeft(gRedBox) || TouchingRight(gRedBox) || TouchingTop(gRedBox) || TouchingBottom(gRedBox))
+                {
+                pmPosition.Y -= 100;
+                }
+
+
 
 
 
