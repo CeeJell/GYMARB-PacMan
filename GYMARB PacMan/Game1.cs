@@ -193,12 +193,22 @@ namespace GYMARB_PacMan
             }
 
 
-
-
             if (powerTimer > 0)
             {
                 powerTimer -= 1;
             }
+
+/*
+            if (coins.Count == 0)
+            {
+                pmPosition = new Vector2(50, 50);
+                coins.Add(new Rectangle(-5, -5, 0, 0));
+            }
+*/
+
+
+
+
 
             base.Update(gameTime);
         }
