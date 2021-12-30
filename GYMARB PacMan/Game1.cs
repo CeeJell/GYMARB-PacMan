@@ -110,10 +110,10 @@ namespace GYMARB_PacMan
                 walls.Add(new Rectangle(490, 90, wallRightLeft.Width, wallRightLeft.Height));
                 walls.Add(new Rectangle(905, 90, wallRightLeft.Width, wallRightLeft.Height));
                 //bumps on the side
-                walls.Add(new Rectangle(490, 335, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(490, 465, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(990, 335, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(990, 465, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(490, 235, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(490, 325, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(840, 235, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(840, 325, wallSidebump.Width, wallSidebump.Height));
            
 
 
