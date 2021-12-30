@@ -18,7 +18,7 @@ namespace GYMARB_PacMan
         Vector2 pmVelocity;
 
         Texture2D gRedTexture;
-        Vector2 gRedPosition = new Vector2(900, 485);
+        Vector2 gRedPosition = new Vector2(885, 500);
         Rectangle gRedBox;
 
         Texture2D coinTexture;
@@ -105,18 +105,18 @@ namespace GYMARB_PacMan
 
                 //top and bottom
                 walls.Add(new Rectangle(490, 90, wallTopBot.Width, wallTopBot.Height));
-                walls.Add(new Rectangle(490, 505, wallTopBot.Width, wallTopBot.Height));
+                walls.Add(new Rectangle(490, 520, wallTopBot.Width, wallTopBot.Height));
                 //right and left
-                walls.Add(new Rectangle(490, 80, wallRightLeft.Width, wallRightLeft.Height));
-                walls.Add(new Rectangle(920, 65, wallRightLeft.Width, wallRightLeft.Height));
+                walls.Add(new Rectangle(490, 90, wallRightLeft.Width, wallRightLeft.Height));
+                walls.Add(new Rectangle(905, 90, wallRightLeft.Width, wallRightLeft.Height));
                 //bumps on the side
-       //         walls.Add(new Rectangle(490, 335, wallSidebump.Width, wallSidebump.Height));
-         //       walls.Add(new Rectangle(490, 465, wallSidebump.Width, wallSidebump.Height));
-           //     walls.Add(new Rectangle(990, 335, wallSidebump.Width, wallSidebump.Height));
-             //   walls.Add(new Rectangle(990, 465, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(490, 335, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(490, 465, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(990, 335, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(990, 465, wallSidebump.Width, wallSidebump.Height));
            
 
-           //     walls.Add(new Rectangle(500, 75, 2, 2));
+
 
 
 
