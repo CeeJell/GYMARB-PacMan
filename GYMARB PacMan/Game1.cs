@@ -12,13 +12,13 @@ namespace GYMARB_PacMan
         private SpriteBatch spriteBatch;
 
         Texture2D pmTexture;
-        Vector2 pmPosition = new Vector2(100, 100);
+        Vector2 pmPosition = new Vector2(500, 100);
         Rectangle pmBox;
         float pmSpeed = 3f;
         Vector2 pmVelocity;
 
         Texture2D gRedTexture;
-        Vector2 gRedPosition = new Vector2(100, 400);
+        Vector2 gRedPosition = new Vector2(900, 485);
         Rectangle gRedBox;
 
         Texture2D coinTexture;
@@ -56,10 +56,10 @@ namespace GYMARB_PacMan
             walls = new List<Rectangle>();
 
 
-            // 420w x 405h 
+            // 405w x 420h 
 
-            graphics.PreferredBackBufferWidth = 1420;
-            graphics.PreferredBackBufferHeight = 605;
+            graphics.PreferredBackBufferWidth = 1405;
+            graphics.PreferredBackBufferHeight = 620;
             graphics.ApplyChanges();
 
             base.Initialize();
@@ -104,19 +104,19 @@ namespace GYMARB_PacMan
                 walls.Add(new Rectangle(70, 550, testTexture.Width, testTexture.Height));
 
                 //top and bottom
-                walls.Add(new Rectangle(490, 65, wallTopBot.Width, wallTopBot.Height));
-                walls.Add(new Rectangle(490, 825, wallTopBot.Width, wallTopBot.Height));
+                walls.Add(new Rectangle(490, 90, wallTopBot.Width, wallTopBot.Height));
+                walls.Add(new Rectangle(490, 505, wallTopBot.Width, wallTopBot.Height));
                 //right and left
-                walls.Add(new Rectangle(490, 65, wallRightLeft.Width, wallRightLeft.Height));
-                walls.Add(new Rectangle(1100, 65, wallRightLeft.Width, wallRightLeft.Height));
+                walls.Add(new Rectangle(490, 80, wallRightLeft.Width, wallRightLeft.Height));
+                walls.Add(new Rectangle(920, 65, wallRightLeft.Width, wallRightLeft.Height));
                 //bumps on the side
-                walls.Add(new Rectangle(490, 335, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(490, 465, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(990, 335, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(990, 465, wallSidebump.Width, wallSidebump.Height));
+       //         walls.Add(new Rectangle(490, 335, wallSidebump.Width, wallSidebump.Height));
+         //       walls.Add(new Rectangle(490, 465, wallSidebump.Width, wallSidebump.Height));
+           //     walls.Add(new Rectangle(990, 335, wallSidebump.Width, wallSidebump.Height));
+             //   walls.Add(new Rectangle(990, 465, wallSidebump.Width, wallSidebump.Height));
            
 
-                walls.Add(new Rectangle(500, 75, 2, 2));
+           //     walls.Add(new Rectangle(500, 75, 2, 2));
 
 
 
@@ -160,7 +160,7 @@ namespace GYMARB_PacMan
         {
             pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 20, 20);
 
-            gRedBox = new Rectangle((int)gRedPosition.X, (int)gRedPosition.Y, 18, 18);
+            gRedBox = new Rectangle((int)gRedPosition.X, (int)gRedPosition.Y, gRedTexture.Width, gRedTexture.Height);
             
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
