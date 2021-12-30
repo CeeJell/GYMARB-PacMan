@@ -28,7 +28,7 @@ namespace GYMARB_PacMan
         Vector2 powerPosition = new Vector2(200, 100);
         double powerTimer = 0;
 
-        Texture2D testTexture;
+
         SpriteFont font;
         int points = 0;
 
@@ -72,7 +72,6 @@ namespace GYMARB_PacMan
             gRedTexture = Content.Load<Texture2D>("GhostRed");
             coinTexture = Content.Load<Texture2D>("Coin");
             powerTexture = Content.Load<Texture2D>("PowerUp");
-            testTexture = Content.Load<Texture2D>("Test");
             font = Content.Load<SpriteFont>("font");
 
             // walls
@@ -100,14 +99,12 @@ namespace GYMARB_PacMan
 
             void AddWalls()
             {
-                walls.Add(new Rectangle(20, 500, testTexture.Width, testTexture.Height));
-                walls.Add(new Rectangle(70, 550, testTexture.Width, testTexture.Height));
 
                 //top and bottom
                 walls.Add(new Rectangle(490, 90, wallTopBot.Width, wallTopBot.Height));
                 walls.Add(new Rectangle(490, 550, wallTopBot.Width, wallTopBot.Height));
-                //right and left
-                walls.Add(new Rectangle(490, 90, wallRightLeft.Width, wallRightLeft.Height));
+                //left and right
+                walls.Add(new Rectangle(490, 90 + 50, wallRightLeft.Width, wallRightLeft.Height));
                 walls.Add(new Rectangle(905, 90, wallRightLeft.Width, wallRightLeft.Height));
                 //bumps on the side
                 walls.Add(new Rectangle(490, 235, wallSidebump.Width, wallSidebump.Height));
