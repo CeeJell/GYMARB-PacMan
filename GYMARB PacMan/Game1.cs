@@ -97,24 +97,36 @@ namespace GYMARB_PacMan
                 powers.Add(new Rectangle((int)powerPosition.X, (int)powerPosition.Y, 11, 11));
                 powerPosition.X += 20;
             }
-            
-            walls.Add(new Rectangle(20, 500, testTexture.Width, testTexture.Height));
-            walls.Add(new Rectangle(70, 550, testTexture.Width, testTexture.Height));
 
-            //top and bottom
-            walls.Add(new Rectangle(500, 75, wallTopBot.Width, wallTopBot.Height));
-            walls.Add(new Rectangle(500, 825, wallTopBot.Width, wallTopBot.Height));
-            //right and left
-            walls.Add(new Rectangle(500, 75 + 50, wallRightLeft.Width, wallRightLeft.Height));
-            walls.Add(new Rectangle(1100, 75, wallRightLeft.Width, wallRightLeft.Height));
-            //bumps on the side
-            walls.Add(new Rectangle(500, 335, wallSidebump.Width, wallSidebump.Height));
-            walls.Add(new Rectangle(500, 465, wallSidebump.Width, wallSidebump.Height));
-            walls.Add(new Rectangle(990, 335, wallSidebump.Width, wallSidebump.Height));
-            walls.Add(new Rectangle(990, 465, wallSidebump.Width, wallSidebump.Height));
 
+            void AddWalls()
+            {
+                walls.Add(new Rectangle(20, 500, testTexture.Width, testTexture.Height));
+                walls.Add(new Rectangle(70, 550, testTexture.Width, testTexture.Height));
+
+                //top and bottom
+                walls.Add(new Rectangle(500, 75, wallTopBot.Width, wallTopBot.Height));
+                walls.Add(new Rectangle(500, 815, wallTopBot.Width, wallTopBot.Height));
+                //right and left
+                walls.Add(new Rectangle(500, 75 + 50, wallRightLeft.Width, wallRightLeft.Height));
+                walls.Add(new Rectangle(1100, 75, wallRightLeft.Width, wallRightLeft.Height));
+                //bumps on the side
+                walls.Add(new Rectangle(500, 335, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(500, 465, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(990, 335, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(990, 465, wallSidebump.Width, wallSidebump.Height));
+
+
+
+
+
+
+
+
+            }
+            AddWalls();
         }
-        
+
         bool TouchingLeft(Rectangle touch)
         {
             return pmBox.Right + pmVelocity.X > touch.Left &&
@@ -248,7 +260,7 @@ namespace GYMARB_PacMan
 
             foreach (var wall in walls)
             {
-                spriteBatch.Draw(testTexture, wall, Color.Blue);
+                spriteBatch.Draw(wallSidebump, wall, Color.Blue);
             }
 
             foreach (var power in powers)
