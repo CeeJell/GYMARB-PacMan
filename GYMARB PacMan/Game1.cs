@@ -18,7 +18,7 @@ namespace GYMARB_PacMan
         Vector2 pmVelocity;
 
         Texture2D gRedTexture;
-        Vector2 gRedPosition = new Vector2(885, 500);
+        Vector2 gRedPosition = new Vector2(885, 530);
         Rectangle gRedBox;
 
         Texture2D coinTexture;
@@ -56,10 +56,10 @@ namespace GYMARB_PacMan
             walls = new List<Rectangle>();
 
 
-            // 405w x 420h 
+            // 405w x 450h 
 
             graphics.PreferredBackBufferWidth = 1405;
-            graphics.PreferredBackBufferHeight = 620;
+            graphics.PreferredBackBufferHeight = 650;
             graphics.ApplyChanges();
 
             base.Initialize();
@@ -105,7 +105,7 @@ namespace GYMARB_PacMan
 
                 //top and bottom
                 walls.Add(new Rectangle(490, 90, wallTopBot.Width, wallTopBot.Height));
-                walls.Add(new Rectangle(490, 520, wallTopBot.Width, wallTopBot.Height));
+                walls.Add(new Rectangle(490, 550, wallTopBot.Width, wallTopBot.Height));
                 //right and left
                 walls.Add(new Rectangle(490, 90, wallRightLeft.Width, wallRightLeft.Height));
                 walls.Add(new Rectangle(905, 90, wallRightLeft.Width, wallRightLeft.Height));
