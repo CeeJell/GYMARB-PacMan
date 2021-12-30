@@ -28,13 +28,16 @@ namespace GYMARB_PacMan
         Vector2 powerPosition = new Vector2(200, 100);
         double powerTimer = 0;
 
+        Rectangle tpLeft;
+        Rectangle tpRight;
 
         SpriteFont font;
         int points = 0;
 
         //walls
         Texture2D wallTopBot;
-        Texture2D wallRightLeft;
+        Texture2D wallSideTop;
+        Texture2D wallSideBottom;
         Texture2D wallSidebump;
         Texture2D wall15x60;
         Texture2D wall15x105;
@@ -85,7 +88,8 @@ namespace GYMARB_PacMan
 
             // walls
             wallTopBot = Content.Load<Texture2D>("WallTopBot");
-            wallRightLeft = Content.Load<Texture2D>("WallRightLeft");
+            wallSideTop = Content.Load<Texture2D>("WallSideTop");
+            wallSideBottom = Content.Load<Texture2D>("WallSideBottom");
             wallSidebump = Content.Load<Texture2D>("WallSidebump");
 
             wall15x60 = Content.Load<Texture2D>("Wall15x60");
@@ -97,8 +101,6 @@ namespace GYMARB_PacMan
             wall60x30 = Content.Load<Texture2D>("Wall60x30");
             wall105x15 = Content.Load<Texture2D>("Wall105x15");
             wall135x15 = Content.Load<Texture2D>("Wall135x15");
-
-
 
 
 
@@ -123,8 +125,10 @@ namespace GYMARB_PacMan
                 walls.Add(new Rectangle(490, 90, wallTopBot.Width, wallTopBot.Height));
                 walls.Add(new Rectangle(490, 550, wallTopBot.Width, wallTopBot.Height));
                 //left and right
-                walls.Add(new Rectangle(490, 90 + 50, wallRightLeft.Width, wallRightLeft.Height));
-                walls.Add(new Rectangle(905, 90, wallRightLeft.Width, wallRightLeft.Height));
+                walls.Add(new Rectangle(490, 90, wallSideTop.Width, wallSideTop.Height));
+                walls.Add(new Rectangle(905, 90, wallSideTop.Width, wallSideTop.Height));
+                walls.Add(new Rectangle(490, 325, wallSideBottom.Width, wallSideBottom.Height));
+                walls.Add(new Rectangle(905, 325, wallSideBottom.Width, wallSideBottom.Height));
                 //bumps on the side
                 walls.Add(new Rectangle(500, 235, wallSidebump.Width, wallSidebump.Height));
                 walls.Add(new Rectangle(500, 325, wallSidebump.Width, wallSidebump.Height));
@@ -174,6 +178,9 @@ namespace GYMARB_PacMan
                 walls.Add(new Rectangle(650, 280, 105, wallSidebump.Height));
             }
             AddWalls();
+
+            tpLeft = new Rectangle(480, 290, 1, 20);
+            tpRight = new Rectangle(925, 290, 1, 20);
         }
 
         bool TouchingLeft(Rectangle touch)
@@ -261,13 +268,24 @@ namespace GYMARB_PacMan
             }
             p = 0;
 
-            
+            if (TouchingRight(tpLeft))
+            {
+                pmPosition.X += 420;
+            }
+
+            if (TouchingLeft(tpRight))
+            {
+                pmPosition.X -= 420;
+            }
+
+
             if(powerTimer > 0)
             {
                 if (TouchingLeft(gRedBox) || TouchingRight(gRedBox) || TouchingTop(gRedBox) || TouchingBottom(gRedBox))
                 {
                     gRedPosition.Y -= 50;
                 }
+                powerTimer -= 1;
             }
 
             else
@@ -278,11 +296,6 @@ namespace GYMARB_PacMan
                 }
             }
 
-
-            if (powerTimer > 0)
-            {
-                powerTimer -= 1;
-            }
 
 /*
             if (coins.Count == 0)
