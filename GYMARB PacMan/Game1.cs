@@ -56,11 +56,10 @@ namespace GYMARB_PacMan
             walls = new List<Rectangle>();
 
 
-            // 600w x 750h 
+            // 420w x 405h 
 
-
-            graphics.PreferredBackBufferWidth = 1600;
-            graphics.PreferredBackBufferHeight = 900;
+            graphics.PreferredBackBufferWidth = 1420;
+            graphics.PreferredBackBufferHeight = 605;
             graphics.ApplyChanges();
 
             base.Initialize();
@@ -105,19 +104,19 @@ namespace GYMARB_PacMan
                 walls.Add(new Rectangle(70, 550, testTexture.Width, testTexture.Height));
 
                 //top and bottom
-                walls.Add(new Rectangle(500, 75, wallTopBot.Width, wallTopBot.Height));
-                walls.Add(new Rectangle(500, 815, wallTopBot.Width, wallTopBot.Height));
+                walls.Add(new Rectangle(490, 65, wallTopBot.Width, wallTopBot.Height));
+                walls.Add(new Rectangle(490, 825, wallTopBot.Width, wallTopBot.Height));
                 //right and left
-                walls.Add(new Rectangle(500, 75 + 50, wallRightLeft.Width, wallRightLeft.Height));
-                walls.Add(new Rectangle(1100, 75, wallRightLeft.Width, wallRightLeft.Height));
+                walls.Add(new Rectangle(490, 65, wallRightLeft.Width, wallRightLeft.Height));
+                walls.Add(new Rectangle(1100, 65, wallRightLeft.Width, wallRightLeft.Height));
                 //bumps on the side
-                walls.Add(new Rectangle(500, 335, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(500, 465, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(490, 335, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(490, 465, wallSidebump.Width, wallSidebump.Height));
                 walls.Add(new Rectangle(990, 335, wallSidebump.Width, wallSidebump.Height));
                 walls.Add(new Rectangle(990, 465, wallSidebump.Width, wallSidebump.Height));
+           
 
-
-
+                walls.Add(new Rectangle(500, 75, 2, 2));
 
 
 
