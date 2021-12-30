@@ -36,6 +36,15 @@ namespace GYMARB_PacMan
         Texture2D wallTopBot;
         Texture2D wallRightLeft;
         Texture2D wallSidebump;
+        Texture2D wall15x60;
+        Texture2D wall15x105;
+        Texture2D wall30x15;
+        Texture2D wall45x15;
+        Texture2D wall45x30;
+        Texture2D wall60x15;
+        Texture2D wall60x30;
+        Texture2D wall105x15;
+        Texture2D wall135x15;
 
         private List<Rectangle> coins;
         private List<Rectangle> powers;
@@ -79,6 +88,16 @@ namespace GYMARB_PacMan
             wallRightLeft = Content.Load<Texture2D>("WallRightLeft");
             wallSidebump = Content.Load<Texture2D>("WallSidebump");
 
+            wall15x60 = Content.Load<Texture2D>("Wall15x60");
+            wall15x105 = Content.Load<Texture2D>("Wall15x105");
+            wall30x15 = Content.Load<Texture2D>("Wall30x15");
+            wall45x15 = Content.Load<Texture2D>("Wall45x15");
+            wall45x30 = Content.Load<Texture2D>("Wall45x30");
+            wall60x15 = Content.Load<Texture2D>("Wall60x15");
+            wall60x30 = Content.Load<Texture2D>("Wall60x30");
+            wall105x15 = Content.Load<Texture2D>("Wall105x15");
+            wall135x15 = Content.Load<Texture2D>("Wall135x15");
+
 
 
 
@@ -107,18 +126,52 @@ namespace GYMARB_PacMan
                 walls.Add(new Rectangle(490, 90 + 50, wallRightLeft.Width, wallRightLeft.Height));
                 walls.Add(new Rectangle(905, 90, wallRightLeft.Width, wallRightLeft.Height));
                 //bumps on the side
-                walls.Add(new Rectangle(490, 235, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(490, 325, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(840, 235, wallSidebump.Width, wallSidebump.Height));
-                walls.Add(new Rectangle(840, 325, wallSidebump.Width, wallSidebump.Height));
-           
+                walls.Add(new Rectangle(500, 235, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(500, 325, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(830, 235, wallSidebump.Width, wallSidebump.Height));
+                walls.Add(new Rectangle(830, 325, wallSidebump.Width, wallSidebump.Height));
+                //walls inside
+                walls.Add(new Rectangle(530, 130, wall45x30.Width, wall45x30.Height));
+                walls.Add(new Rectangle(605, 130, wall60x30.Width, wall60x30.Height));
+                walls.Add(new Rectangle(695, 100, wall15x60.Width, wall15x60.Height));
+                walls.Add(new Rectangle(740, 130, wall60x30.Width, wall60x30.Height));
+                walls.Add(new Rectangle(830, 130, wall45x30.Width, wall45x30.Height));
 
+                walls.Add(new Rectangle(530, 190, wall45x15.Width, wall45x15.Height));
+                walls.Add(new Rectangle(605, 190, wall15x105.Width, wall15x105.Height));
+                walls.Add(new Rectangle(650, 190, wall105x15.Width, wall105x15.Height));
+                walls.Add(new Rectangle(785, 190, wall15x105.Width, wall15x105.Height));
+                walls.Add(new Rectangle(830, 190, wall45x15.Width, wall45x15.Height));
 
+                walls.Add(new Rectangle(605, 235, wall60x15.Width, wall60x15.Height));
+                walls.Add(new Rectangle(695, 190, wall15x60.Width, wall15x60.Height));
+                walls.Add(new Rectangle(740, 235, wall60x15.Width, wall60x15.Height));
 
+                walls.Add(new Rectangle(605, 325, wall15x60.Width, wall15x60.Height));
+                walls.Add(new Rectangle(650, 370, wall105x15.Width, wall105x15.Height));
+                walls.Add(new Rectangle(695, 370, wall15x60.Width, wall15x60.Height));
+                walls.Add(new Rectangle(785, 325, wall15x60.Width, wall15x60.Height));
 
+                walls.Add(new Rectangle(530, 415, wall45x15.Width, wall45x15.Height));
+                walls.Add(new Rectangle(560, 415, wall15x60.Width, wall15x60.Height));
+                walls.Add(new Rectangle(605, 415, wall60x15.Width, wall60x15.Height));
+                walls.Add(new Rectangle(740, 415, wall60x15.Width, wall60x15.Height));
+                walls.Add(new Rectangle(830, 415, wall15x60.Width, wall15x60.Height));
+                walls.Add(new Rectangle(830, 415, wall45x15.Width, wall45x15.Height));
 
+                walls.Add(new Rectangle(500, 460, wall30x15.Width, wall30x15.Height));
+                walls.Add(new Rectangle(650, 460, wall105x15.Width, wall105x15.Height));
+                walls.Add(new Rectangle(875, 460, wall30x15.Width, wall30x15.Height));
 
+                walls.Add(new Rectangle(605, 460, wall15x60.Width, wall15x60.Height));
+                walls.Add(new Rectangle(695, 460, wall15x60.Width, wall15x60.Height));
+                walls.Add(new Rectangle(785, 460, wall15x60.Width, wall15x60.Height));
 
+                walls.Add(new Rectangle(530, 505, wall135x15.Width, wall135x15.Height));
+                walls.Add(new Rectangle(740, 505, wall135x15.Width, wall135x15.Height));
+
+                //spökbox (inte klar)
+                walls.Add(new Rectangle(650, 280, 105, wallSidebump.Height));
             }
             AddWalls();
         }
