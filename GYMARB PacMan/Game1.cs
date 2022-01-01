@@ -369,13 +369,13 @@ namespace GYMARB_PacMan
             }
 
 
-/*
+
             if (coins.Count == 0)
             {
                 pmPosition = new Vector2(50, 50);
                 coins.Add(new Rectangle(-5, -5, 0, 0));
             }
-*/
+
 
 
 
@@ -394,7 +394,7 @@ namespace GYMARB_PacMan
 
             foreach (var wall in walls)
             {
-                spriteBatch.Draw(wallSidebump, wall, Color.Blue);
+                spriteBatch.Draw(wall135x15, wall, Color.Blue);
             }
 
             foreach (var power in powers)
