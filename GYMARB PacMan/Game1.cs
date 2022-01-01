@@ -12,7 +12,7 @@ namespace GYMARB_PacMan
         private SpriteBatch spriteBatch;
 
         Texture2D pmTexture;
-        Vector2 pmPosition = new Vector2(500, 100);
+        Vector2 pmPosition = new Vector2(692, 345);
         Rectangle pmBox;
         float pmSpeed = 3f;
         Vector2 pmVelocity;
@@ -22,7 +22,6 @@ namespace GYMARB_PacMan
         Rectangle gRedBox;
 
         Texture2D coinTexture;
-        Vector2 coinPosition = new Vector2(200, 20);
 
         Texture2D powerTexture;
         Vector2 powerPosition = new Vector2(200, 100);
@@ -104,13 +103,6 @@ namespace GYMARB_PacMan
 
 
 
-
-            for (int i = 0; i < 20; i++)
-            {
-                coins.Add(new Rectangle((int)coinPosition.X, (int)coinPosition.Y, 5, 5));
-                coinPosition.X += 20;
-            }
-
             for (int i = 0; i < 2; i++)
             {
                 powers.Add(new Rectangle((int)powerPosition.X, (int)powerPosition.Y, 11, 11));
@@ -181,6 +173,86 @@ namespace GYMARB_PacMan
 
             tpLeft = new Rectangle(480, 290, 1, 20);
             tpRight = new Rectangle(925, 290, 1, 20);
+
+            void AddCoins()
+            {
+                // coins
+                int coinX;
+                int coinY;
+
+                coinX = 513;
+                for (int i = 0; i < 12; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 113, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 723;
+                for (int i = 0; i < 12; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 113, 5, 5));
+                    coinX += 15;
+                }
+
+                coinY = 128;
+                for (int i = 0; i < 3; i++)
+                {
+                    coins.Add(new Rectangle(513, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 128;
+                for (int i = 0; i < 3; i++)
+                {
+                    coins.Add(new Rectangle(588, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 128;
+                for (int i = 0; i < 3; i++)
+                {
+                    coins.Add(new Rectangle(678, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 128;
+                for (int i = 0; i < 3; i++)
+                {
+                    coins.Add(new Rectangle(723, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 128;
+                for (int i = 0; i < 3; i++)
+                {
+                    coins.Add(new Rectangle(813, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 128;
+                for (int i = 0; i < 3; i++)
+                {
+                    coins.Add(new Rectangle(888, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinX = 513;
+                for (int i = 0; i < 26; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 173, 5, 5));
+                    coinX += 15;
+                }
+
+
+
+
+
+
+
+
+
+            }
+            AddCoins();
         }
 
         bool TouchingLeft(Rectangle touch)
@@ -215,7 +287,7 @@ namespace GYMARB_PacMan
 
         protected override void Update(GameTime gameTime)
         {
-            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 20, 20);
+            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 21, 21);
 
             gRedBox = new Rectangle((int)gRedPosition.X, (int)gRedPosition.Y, gRedTexture.Width, gRedTexture.Height);
             
@@ -337,7 +409,7 @@ namespace GYMARB_PacMan
 
             spriteBatch.DrawString(font, points.ToString(), new Vector2(10, 20), Color.White);
 
-            spriteBatch.DrawString(font, powerTimer.ToString(), new Vector2(30, 20), Color.White);
+            spriteBatch.DrawString(font, powerTimer.ToString(), new Vector2(40, 20), Color.White);
 
             spriteBatch.Draw(gRedTexture, gRedPosition, Color.White);
 
