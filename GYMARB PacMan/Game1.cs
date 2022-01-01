@@ -18,13 +18,12 @@ namespace GYMARB_PacMan
         Vector2 pmVelocity;
 
         Texture2D gRedTexture;
-        Vector2 gRedPosition = new Vector2(885, 530);
+        Vector2 gRedPosition = new Vector2(692, 255);
         Rectangle gRedBox;
 
         Texture2D coinTexture;
 
         Texture2D powerTexture;
-        Vector2 powerPosition = new Vector2(200, 100);
         double powerTimer = 0;
 
         Rectangle tpLeft;
@@ -103,11 +102,7 @@ namespace GYMARB_PacMan
 
 
 
-            for (int i = 0; i < 2; i++)
-            {
-                powers.Add(new Rectangle((int)powerPosition.X, (int)powerPosition.Y, 11, 11));
-                powerPosition.X += 20;
-            }
+
 
 
             void AddWalls()
@@ -171,9 +166,6 @@ namespace GYMARB_PacMan
             }
             AddWalls();
 
-            tpLeft = new Rectangle(480, 290, 1, 20);
-            tpRight = new Rectangle(925, 290, 1, 20);
-
             void AddCoins()
             {
                 // coins
@@ -194,11 +186,121 @@ namespace GYMARB_PacMan
                     coinX += 15;
                 }
 
+                coinX = 513;
+                for (int i = 0; i < 26; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 173, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 513;
+                for (int i = 0; i < 6; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 218, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 633;
+                for (int i = 0; i < 4; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 218, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 723;
+                for (int i = 0; i < 4; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 218, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 813;
+                for (int i = 0; i < 6; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 218, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 513;
+                for (int i = 0; i < 12; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 398, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 723;
+                for (int i = 0; i < 12; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 398, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 528;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 443, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 588;
+                for (int i = 0; i < 16; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 443, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 858;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 443, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 513;
+                for (int i = 0; i < 6; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 488, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 633;
+                for (int i = 0; i < 4; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 488, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 723;
+                for (int i = 0; i < 4; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 488, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 813;
+                for (int i = 0; i < 6; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 488, 5, 5));
+                    coinX += 15;
+                }
+
+                coinX = 513;
+                for (int i = 0; i < 26; i++)
+                {
+                    coins.Add(new Rectangle(coinX, 533, 5, 5));
+                    coinX += 15;
+                }
+
+
+
+
+
+
                 coinY = 128;
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     coins.Add(new Rectangle(513, coinY, 5, 5));
-                    coinY += 15;
+                    coinY += 30;
                 }
 
                 coinY = 128;
@@ -230,29 +332,193 @@ namespace GYMARB_PacMan
                 }
 
                 coinY = 128;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(888, coinY, 5, 5));
+                    coinY += 30;
+                }
+
+                coinY = 173;
+                for (int i = 0; i < 3; i++)
+                {
+                    coins.Add(new Rectangle(513, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 173;
+                for (int i = 0; i < 3; i++)
+                {
+                    coins.Add(new Rectangle(588, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 188;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(633, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 188;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(768, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 173;
+                for (int i = 0; i < 3; i++)
+                {
+                    coins.Add(new Rectangle(813, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 173;
                 for (int i = 0; i < 3; i++)
                 {
                     coins.Add(new Rectangle(888, coinY, 5, 5));
                     coinY += 15;
                 }
 
-                coinX = 513;
-                for (int i = 0; i < 26; i++)
+                coinY = 233;
+                for (int i = 0; i < 11; i++)
                 {
-                    coins.Add(new Rectangle(coinX, 173, 5, 5));
-                    coinX += 15;
+                    coins.Add(new Rectangle(588, coinY, 5, 5));
+                    coinY += 15;
                 }
 
+                coinY = 233;
+                for (int i = 0; i < 11; i++)
+                {
+                    coins.Add(new Rectangle(813, coinY, 5, 5));
+                    coinY += 15;
+                }
 
+                coinY = 413;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(513, coinY, 5, 5));
+                    coinY += 15;
+                }
 
+                coinY = 413;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(588, coinY, 5, 5));
+                    coinY += 15;
+                }
 
+                coinY = 413;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(678, coinY, 5, 5));
+                    coinY += 15;
+                }
 
+                coinY = 413;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(723, coinY, 5, 5));
+                    coinY += 15;
+                }
 
+                coinY = 413;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(813, coinY, 5, 5));
+                    coinY += 15;
+                }
 
+                coinY = 413;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(888, coinY, 5, 5));
+                    coinY += 15;
+                }
 
+                coinY = 458;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(543, coinY, 5, 5));
+                    coinY += 15;
+                }
 
+                coinY = 458;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(588, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 458;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(633, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 458;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(768, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 458;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(813, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 458;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(858, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 503;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(513, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 503;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(678, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 503;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(723, coinY, 5, 5));
+                    coinY += 15;
+                }
+
+                coinY = 503;
+                for (int i = 0; i < 2; i++)
+                {
+                    coins.Add(new Rectangle(888, coinY, 5, 5));
+                    coinY += 15;
+                }
             }
             AddCoins();
+
+
+            powers.Add(new Rectangle(509, 139, 12, 12));
+            powers.Add(new Rectangle(884, 139, 12, 12));
+            powers.Add(new Rectangle(509, 439, 12, 12));
+            powers.Add(new Rectangle(884, 439, 12, 12));
+
+
+            tpLeft = new Rectangle(480, 290, 1, 20);
+            tpRight = new Rectangle(925, 290, 1, 20);
+
+
         }
 
         bool TouchingLeft(Rectangle touch)
@@ -375,7 +641,6 @@ namespace GYMARB_PacMan
                 pmPosition = new Vector2(50, 50);
                 coins.Add(new Rectangle(-5, -5, 0, 0));
             }
-
 
 
 
