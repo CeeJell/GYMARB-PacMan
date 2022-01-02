@@ -21,6 +21,18 @@ namespace GYMARB_PacMan
         Vector2 gRedPosition = new Vector2(692, 255);
         Rectangle gRedBox;
 
+        Texture2D gBlueTexture;
+        Vector2 gBluePosition = new Vector2(20, 100);
+        Rectangle gBlueBox;
+
+        Texture2D gPinkTexture;
+        Vector2 gPinkPosition = new Vector2(40, 100);
+        Rectangle gPinkBox;
+
+        Texture2D gOrangeTexture;
+        Vector2 gOrangePosition = new Vector2(60, 100);
+        Rectangle gOrangeBox;
+
         Texture2D coinTexture;
 
         Texture2D powerTexture;
@@ -80,6 +92,9 @@ namespace GYMARB_PacMan
             spriteBatch = new SpriteBatch(GraphicsDevice);
             pmTexture = Content.Load<Texture2D>("Pacman");
             gRedTexture = Content.Load<Texture2D>("GhostRed");
+            gBlueTexture = Content.Load<Texture2D>("GhostBlue");
+            gPinkTexture = Content.Load<Texture2D>("GhostPink");
+            gOrangeTexture = Content.Load<Texture2D>("GhostOrange");
             coinTexture = Content.Load<Texture2D>("Coin");
             powerTexture = Content.Load<Texture2D>("PowerUp");
             font = Content.Load<SpriteFont>("font");
@@ -556,7 +571,13 @@ namespace GYMARB_PacMan
             pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 21, 21);
 
             gRedBox = new Rectangle((int)gRedPosition.X, (int)gRedPosition.Y, gRedTexture.Width, gRedTexture.Height);
-            
+
+            gBlueBox = new Rectangle((int)gBluePosition.X, (int)gBluePosition.Y, gBlueTexture.Width, gBlueTexture.Height);
+
+            gPinkBox = new Rectangle((int)gPinkPosition.X, (int)gPinkPosition.Y, gPinkTexture.Width, gPinkTexture.Height);
+
+            gOrangeBox = new Rectangle((int)gOrangePosition.X, (int)gOrangePosition.Y, gOrangeTexture.Width, gOrangeTexture.Height);
+
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
                 pmVelocity.X = -pmSpeed;
@@ -623,12 +644,36 @@ namespace GYMARB_PacMan
                 {
                     gRedPosition.Y -= 50;
                 }
+                if (TouchingLeft(gBlueBox) || TouchingRight(gBlueBox) || TouchingTop(gBlueBox) || TouchingBottom(gBlueBox))
+                {
+                    gBluePosition.Y -= 50;
+                }
+                if (TouchingLeft(gPinkBox) || TouchingRight(gPinkBox) || TouchingTop(gPinkBox) || TouchingBottom(gPinkBox))
+                {
+                    gPinkPosition.Y -= 50;
+                }
+                if (TouchingLeft(gOrangeBox) || TouchingRight(gOrangeBox) || TouchingTop(gOrangeBox) || TouchingBottom(gOrangeBox))
+                {
+                    gOrangePosition.Y -= 50;
+                }
                 powerTimer -= 1;
             }
 
             else
             {
                 if (TouchingLeft(gRedBox) || TouchingRight(gRedBox) || TouchingTop(gRedBox) || TouchingBottom(gRedBox))
+                {
+                    pmPosition.Y -= 100;
+                }
+                if (TouchingLeft(gBlueBox) || TouchingRight(gBlueBox) || TouchingTop(gBlueBox) || TouchingBottom(gBlueBox))
+                {
+                    pmPosition.Y -= 100;
+                }
+                if (TouchingLeft(gPinkBox) || TouchingRight(gPinkBox) || TouchingTop(gPinkBox) || TouchingBottom(gPinkBox))
+                {
+                    pmPosition.Y -= 100;
+                }
+                if (TouchingLeft(gOrangeBox) || TouchingRight(gOrangeBox) || TouchingTop(gOrangeBox) || TouchingBottom(gOrangeBox))
                 {
                     pmPosition.Y -= 100;
                 }
@@ -675,6 +720,12 @@ namespace GYMARB_PacMan
             spriteBatch.DrawString(font, points.ToString(), new Vector2(10, 20), Color.White);
 
             spriteBatch.DrawString(font, powerTimer.ToString(), new Vector2(40, 20), Color.White);
+
+            spriteBatch.Draw(gBlueTexture, gBluePosition, Color.White);
+
+            spriteBatch.Draw(gPinkTexture, gPinkPosition, Color.White);
+
+            spriteBatch.Draw(gOrangeTexture, gOrangePosition, Color.White);
 
             spriteBatch.Draw(gRedTexture, gRedPosition, Color.White);
 
