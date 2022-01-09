@@ -14,7 +14,7 @@ namespace GYMARB_PacMan
         Texture2D pmTexture;
         Vector2 pmPosition = new Vector2(689, 342);
         Rectangle pmBox;
-        float pmSpeed = 1.5f;
+        float pmSpeed = 2.5f;
         Vector2 pmVelocity;
 
         Texture2D pmTest;
@@ -572,7 +572,7 @@ namespace GYMARB_PacMan
 
         protected override void Update(GameTime gameTime)
         {
-            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 27, 27);
+            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 25, 25);
 
             gRedBox = new Rectangle((int)gRedPosition.X, (int)gRedPosition.Y, gRedTexture.Width, gRedTexture.Height);
 
@@ -602,7 +602,7 @@ namespace GYMARB_PacMan
 
 
             pmPosition += pmVelocity;
-            pmVelocity = Vector2.Zero;
+           // pmVelocity = Vector2.Zero;
 
             int c = 0;
             foreach (var coin in coins)
