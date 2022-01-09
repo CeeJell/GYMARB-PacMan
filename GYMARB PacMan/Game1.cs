@@ -17,6 +17,8 @@ namespace GYMARB_PacMan
         float pmSpeed = 3f;
         Vector2 pmVelocity;
 
+        Texture2D pmTest;
+
         Texture2D gRedTexture;
         Vector2 gRedPosition = new Vector2(692, 255);
         Rectangle gRedBox;
@@ -98,6 +100,8 @@ namespace GYMARB_PacMan
             coinTexture = Content.Load<Texture2D>("Coin");
             powerTexture = Content.Load<Texture2D>("PowerUp");
             font = Content.Load<SpriteFont>("font");
+
+            pmTest = Content.Load<Texture2D>("PacmanTest");
 
             // walls
             wallTopBot = Content.Load<Texture2D>("WallTopBot");
@@ -568,7 +572,7 @@ namespace GYMARB_PacMan
 
         protected override void Update(GameTime gameTime)
         {
-            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 21, 21);
+            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 30, 30);
 
             gRedBox = new Rectangle((int)gRedPosition.X, (int)gRedPosition.Y, gRedTexture.Width, gRedTexture.Height);
 
@@ -700,7 +704,7 @@ namespace GYMARB_PacMan
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(pmTexture, pmPosition, Color.White);
+            spriteBatch.Draw(pmTest, pmPosition, Color.White);
 
             foreach (var wall in walls)
             {
