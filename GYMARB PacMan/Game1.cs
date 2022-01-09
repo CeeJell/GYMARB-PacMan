@@ -12,9 +12,9 @@ namespace GYMARB_PacMan
         private SpriteBatch spriteBatch;
 
         Texture2D pmTexture;
-        Vector2 pmPosition = new Vector2(692, 345);
+        Vector2 pmPosition = new Vector2(689, 342);
         Rectangle pmBox;
-        float pmSpeed = 3f;
+        float pmSpeed = 1.5f;
         Vector2 pmVelocity;
 
         Texture2D pmTest;
@@ -572,7 +572,7 @@ namespace GYMARB_PacMan
 
         protected override void Update(GameTime gameTime)
         {
-            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 30, 30);
+            pmBox = new Rectangle((int)pmPosition.X, (int)pmPosition.Y, 27, 27);
 
             gRedBox = new Rectangle((int)gRedPosition.X, (int)gRedPosition.Y, gRedTexture.Width, gRedTexture.Height);
 
