@@ -704,7 +704,7 @@ namespace GYMARB_PacMan
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(pmTest, pmPosition, Color.White);
+            spriteBatch.Draw(pmTexture, pmPosition, Color.White);
 
             foreach (var wall in walls)
             {
