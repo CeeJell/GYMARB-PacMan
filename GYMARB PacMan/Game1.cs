@@ -540,33 +540,33 @@ namespace GYMARB_PacMan
 
         }
 
-        bool TouchingLeft(Rectangle touch)
+        bool TouchingLeft(Rectangle touch, Rectangle user, Vector2 speed)
         {
-            return pmBox.Right + pmVelocity.X > touch.Left &&
-                pmBox.Left < touch.Left &&
-                pmBox.Bottom > touch.Top &&
-                pmBox.Top < touch.Bottom;
+            return user.Right + speed.X > touch.Left &&
+                user.Left < touch.Left &&
+                user.Bottom > touch.Top &&
+                user.Top < touch.Bottom;
         }
-        bool TouchingRight(Rectangle touch)
+        bool TouchingRight(Rectangle touch, Rectangle user, Vector2 speed)
         {
-            return pmBox.Left + pmVelocity.X < touch.Right &&
-                pmBox.Right > touch.Right &&
-                pmBox.Bottom > touch.Top &&
-                pmBox.Top < touch.Bottom;
+            return user.Left + speed.X < touch.Right &&
+                user.Right > touch.Right &&
+                user.Bottom > touch.Top &&
+                user.Top < touch.Bottom;
         }
-        bool TouchingTop(Rectangle touch)
+        bool TouchingTop(Rectangle touch, Rectangle user, Vector2 speed)
         {
-            return pmBox.Bottom + pmVelocity.Y > touch.Top &&
-                pmBox.Top < touch.Top &&
-                pmBox.Right > touch.Left &&
-                pmBox.Left < touch.Right;
+            return user.Bottom + speed.Y > touch.Top &&
+                user.Top < touch.Top &&
+                user.Right > touch.Left &&
+                user.Left < touch.Right;
         }
-        bool TouchingBottom(Rectangle touch)
+        bool TouchingBottom(Rectangle touch, Rectangle user, Vector2 speed)
         {
-            return pmBox.Top + pmVelocity.Y < touch.Bottom &&
-                pmBox.Bottom > touch.Bottom &&
-                pmBox.Right > touch.Left &&
-                pmBox.Left < touch.Right;
+            return user.Top + speed.Y < touch.Bottom &&
+                user.Bottom > touch.Bottom &&
+                user.Right > touch.Left &&
+                user.Left < touch.Right;
         }
         
 
@@ -594,9 +594,9 @@ namespace GYMARB_PacMan
 
             foreach (var wall in walls)
             {
-                if (pmVelocity.X > 0 && TouchingLeft(wall) || pmVelocity.X < 0 && TouchingRight(wall))
+                if (pmVelocity.X > 0 && TouchingLeft(wall, pmBox, pmVelocity) || pmVelocity.X < 0 && TouchingRight(wall, pmBox, pmVelocity))
                     pmVelocity.X = 0;
-                if (pmVelocity.Y > 0 && TouchingTop(wall) || pmVelocity.Y < 0 && TouchingBottom(wall))
+                if (pmVelocity.Y > 0 && TouchingTop(wall, pmBox, pmVelocity) || pmVelocity.Y < 0 && TouchingBottom(wall, pmBox, pmVelocity))
                     pmVelocity.Y = 0;
             }
 
@@ -607,7 +607,8 @@ namespace GYMARB_PacMan
             int c = 0;
             foreach (var coin in coins)
             {
-                if (TouchingLeft(coin) || TouchingRight(coin) || TouchingTop(coin) || TouchingBottom(coin))
+                if (TouchingLeft(coin, pmBox, pmVelocity) || TouchingRight(coin, pmBox, pmVelocity) 
+                    || TouchingTop(coin, pmBox, pmVelocity) || TouchingBottom(coin, pmBox, pmVelocity))
                 {
                     points++;
                     coins.RemoveAt(c);
@@ -621,7 +622,8 @@ namespace GYMARB_PacMan
             int p = 0;
             foreach (var power in powers)
             {
-                if (TouchingLeft(power) || TouchingRight(power) || TouchingTop(power) || TouchingBottom(power))
+                if (TouchingLeft(power, pmBox, pmVelocity) || TouchingRight(power, pmBox, pmVelocity) 
+                    || TouchingTop(power, pmBox, pmVelocity) || TouchingBottom(power, pmBox, pmVelocity))
                 {
                     powerTimer = 60 * 10;
                     powers.RemoveAt(p);
@@ -631,12 +633,12 @@ namespace GYMARB_PacMan
             }
             p = 0;
 
-            if (TouchingRight(tpLeft))
+            if (TouchingRight(tpLeft, pmBox, pmVelocity))
             {
                 pmPosition.X += 420;
             }
 
-            if (TouchingLeft(tpRight))
+            if (TouchingLeft(tpRight, pmBox, pmVelocity))
             {
                 pmPosition.X -= 420;
             }
@@ -644,19 +646,23 @@ namespace GYMARB_PacMan
 
             if(powerTimer > 0)
             {
-                if (TouchingLeft(gRedBox) || TouchingRight(gRedBox) || TouchingTop(gRedBox) || TouchingBottom(gRedBox))
+                if (TouchingLeft(gRedBox, pmBox, pmVelocity) || TouchingRight(gRedBox, pmBox, pmVelocity) 
+                    || TouchingTop(gRedBox, pmBox, pmVelocity) || TouchingBottom(gRedBox, pmBox, pmVelocity))
                 {
                     gRedPosition.Y -= 50;
                 }
-                if (TouchingLeft(gBlueBox) || TouchingRight(gBlueBox) || TouchingTop(gBlueBox) || TouchingBottom(gBlueBox))
+                if (TouchingLeft(gBlueBox, pmBox, pmVelocity) || TouchingRight(gBlueBox, pmBox, pmVelocity) 
+                    || TouchingTop(gBlueBox, pmBox, pmVelocity) || TouchingBottom(gBlueBox, pmBox, pmVelocity))
                 {
                     gBluePosition.Y -= 50;
                 }
-                if (TouchingLeft(gPinkBox) || TouchingRight(gPinkBox) || TouchingTop(gPinkBox) || TouchingBottom(gPinkBox))
+                if (TouchingLeft(gPinkBox, pmBox, pmVelocity) || TouchingRight(gPinkBox, pmBox, pmVelocity) 
+                    || TouchingTop(gPinkBox, pmBox, pmVelocity) || TouchingBottom(gPinkBox, pmBox, pmVelocity))
                 {
                     gPinkPosition.Y -= 50;
                 }
-                if (TouchingLeft(gOrangeBox) || TouchingRight(gOrangeBox) || TouchingTop(gOrangeBox) || TouchingBottom(gOrangeBox))
+                if (TouchingLeft(gOrangeBox, pmBox, pmVelocity) || TouchingRight(gOrangeBox, pmBox, pmVelocity) 
+                    || TouchingTop(gOrangeBox, pmBox, pmVelocity) || TouchingBottom(gOrangeBox, pmBox, pmVelocity))
                 {
                     gOrangePosition.Y -= 50;
                 }
@@ -665,19 +671,23 @@ namespace GYMARB_PacMan
 
             else
             {
-                if (TouchingLeft(gRedBox) || TouchingRight(gRedBox) || TouchingTop(gRedBox) || TouchingBottom(gRedBox))
+                if (TouchingLeft(gRedBox, pmBox, pmVelocity) || TouchingRight(gRedBox, pmBox, pmVelocity) 
+                    || TouchingTop(gRedBox, pmBox, pmVelocity) || TouchingBottom(gRedBox, pmBox, pmVelocity))
                 {
                     pmPosition.Y -= 100;
                 }
-                if (TouchingLeft(gBlueBox) || TouchingRight(gBlueBox) || TouchingTop(gBlueBox) || TouchingBottom(gBlueBox))
+                if (TouchingLeft(gBlueBox, pmBox, pmVelocity) || TouchingRight(gBlueBox, pmBox, pmVelocity) 
+                    || TouchingTop(gBlueBox, pmBox, pmVelocity) || TouchingBottom(gBlueBox, pmBox, pmVelocity))
                 {
                     pmPosition.Y -= 100;
                 }
-                if (TouchingLeft(gPinkBox) || TouchingRight(gPinkBox) || TouchingTop(gPinkBox) || TouchingBottom(gPinkBox))
+                if (TouchingLeft(gPinkBox, pmBox, pmVelocity) || TouchingRight(gPinkBox, pmBox, pmVelocity) 
+                    || TouchingTop(gPinkBox, pmBox, pmVelocity) || TouchingBottom(gPinkBox, pmBox, pmVelocity))
                 {
                     pmPosition.Y -= 100;
                 }
-                if (TouchingLeft(gOrangeBox) || TouchingRight(gOrangeBox) || TouchingTop(gOrangeBox) || TouchingBottom(gOrangeBox))
+                if (TouchingLeft(gOrangeBox, pmBox, pmVelocity) || TouchingRight(gOrangeBox, pmBox, pmVelocity) 
+                    || TouchingTop(gOrangeBox, pmBox, pmVelocity) || TouchingBottom(gOrangeBox, pmBox, pmVelocity))
                 {
                     pmPosition.Y -= 100;
                 }
