@@ -28,12 +28,15 @@ namespace GYMARB_PacMan
         Rectangle gBlueBox;
 
         Texture2D gPinkTexture;
-        Vector2 gPinkPosition = new Vector2(40, 100);
+        Vector2 gPinkPosition = new Vector2(70, 100);
         Rectangle gPinkBox;
 
         Texture2D gOrangeTexture;
-        Vector2 gOrangePosition = new Vector2(60, 100);
+        Vector2 gOrangePosition = new Vector2(120, 100);
         Rectangle gOrangeBox;
+
+        float gSpeed = 1.5f;
+        Vector2 gVelocity;
 
         Texture2D coinTexture;
 
@@ -583,115 +586,119 @@ namespace GYMARB_PacMan
             gOrangeBox = new Rectangle((int)gOrangePosition.X, (int)gOrangePosition.Y, gOrangeTexture.Width, gOrangeTexture.Height);
 
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-                pmVelocity.X = -pmSpeed;
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
-                pmVelocity.X = pmSpeed;
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-                pmVelocity.Y = -pmSpeed;
-            else if (Keyboard.GetState().IsKeyDown(Keys.S))
-                pmVelocity.Y = pmSpeed;
-
-            foreach (var wall in walls)
+            void PacmanUpdate()
             {
-                if (pmVelocity.X > 0 && TouchingLeft(wall, pmBox, pmVelocity) || pmVelocity.X < 0 && TouchingRight(wall, pmBox, pmVelocity))
-                    pmVelocity.X = 0;
-                if (pmVelocity.Y > 0 && TouchingTop(wall, pmBox, pmVelocity) || pmVelocity.Y < 0 && TouchingBottom(wall, pmBox, pmVelocity))
-                    pmVelocity.Y = 0;
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    pmVelocity.X = -pmSpeed;
+                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                    pmVelocity.X = pmSpeed;
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
+                    pmVelocity.Y = -pmSpeed;
+                else if (Keyboard.GetState().IsKeyDown(Keys.S))
+                    pmVelocity.Y = pmSpeed;
+
+                foreach (var wall in walls)
+                {
+                    if (pmVelocity.X > 0 && TouchingLeft(wall, pmBox, pmVelocity) || pmVelocity.X < 0 && TouchingRight(wall, pmBox, pmVelocity))
+                        pmVelocity.X = 0;
+                    if (pmVelocity.Y > 0 && TouchingTop(wall, pmBox, pmVelocity) || pmVelocity.Y < 0 && TouchingBottom(wall, pmBox, pmVelocity))
+                        pmVelocity.Y = 0;
+                }
+
+
+                pmPosition += pmVelocity;
+                // pmVelocity = Vector2.Zero;
+
+                int c = 0;
+                foreach (var coin in coins)
+                {
+                    if (TouchingLeft(coin, pmBox, pmVelocity) || TouchingRight(coin, pmBox, pmVelocity)
+                        || TouchingTop(coin, pmBox, pmVelocity) || TouchingBottom(coin, pmBox, pmVelocity))
+                    {
+                        points++;
+                        coins.RemoveAt(c);
+                        break;
+                    }
+                    c++;
+                }
+                c = 0;
+
+
+                int p = 0;
+                foreach (var power in powers)
+                {
+                    if (TouchingLeft(power, pmBox, pmVelocity) || TouchingRight(power, pmBox, pmVelocity)
+                        || TouchingTop(power, pmBox, pmVelocity) || TouchingBottom(power, pmBox, pmVelocity))
+                    {
+                        powerTimer = 60 * 10;
+                        powers.RemoveAt(p);
+                        break;
+                    }
+                    p++;
+                }
+                p = 0;
+
+                if (TouchingRight(tpLeft, pmBox, pmVelocity))
+                {
+                    pmPosition.X += 420;
+                }
+
+                if (TouchingLeft(tpRight, pmBox, pmVelocity))
+                {
+                    pmPosition.X -= 420;
+                }
+
+
+                if (powerTimer > 0)
+                {
+                    if (TouchingLeft(gRedBox, pmBox, pmVelocity) || TouchingRight(gRedBox, pmBox, pmVelocity)
+                        || TouchingTop(gRedBox, pmBox, pmVelocity) || TouchingBottom(gRedBox, pmBox, pmVelocity))
+                    {
+                        gRedPosition.Y -= 50;
+                    }
+                    if (TouchingLeft(gBlueBox, pmBox, pmVelocity) || TouchingRight(gBlueBox, pmBox, pmVelocity)
+                        || TouchingTop(gBlueBox, pmBox, pmVelocity) || TouchingBottom(gBlueBox, pmBox, pmVelocity))
+                    {
+                        gBluePosition.Y -= 50;
+                    }
+                    if (TouchingLeft(gPinkBox, pmBox, pmVelocity) || TouchingRight(gPinkBox, pmBox, pmVelocity)
+                        || TouchingTop(gPinkBox, pmBox, pmVelocity) || TouchingBottom(gPinkBox, pmBox, pmVelocity))
+                    {
+                        gPinkPosition.Y -= 50;
+                    }
+                    if (TouchingLeft(gOrangeBox, pmBox, pmVelocity) || TouchingRight(gOrangeBox, pmBox, pmVelocity)
+                        || TouchingTop(gOrangeBox, pmBox, pmVelocity) || TouchingBottom(gOrangeBox, pmBox, pmVelocity))
+                    {
+                        gOrangePosition.Y -= 50;
+                    }
+                    powerTimer -= 1;
+                }
+
+                else
+                {
+                    if (TouchingLeft(gRedBox, pmBox, pmVelocity) || TouchingRight(gRedBox, pmBox, pmVelocity)
+                        || TouchingTop(gRedBox, pmBox, pmVelocity) || TouchingBottom(gRedBox, pmBox, pmVelocity))
+                    {
+                        pmPosition.Y -= 100;
+                    }
+                    if (TouchingLeft(gBlueBox, pmBox, pmVelocity) || TouchingRight(gBlueBox, pmBox, pmVelocity)
+                        || TouchingTop(gBlueBox, pmBox, pmVelocity) || TouchingBottom(gBlueBox, pmBox, pmVelocity))
+                    {
+                        pmPosition.Y -= 100;
+                    }
+                    if (TouchingLeft(gPinkBox, pmBox, pmVelocity) || TouchingRight(gPinkBox, pmBox, pmVelocity)
+                        || TouchingTop(gPinkBox, pmBox, pmVelocity) || TouchingBottom(gPinkBox, pmBox, pmVelocity))
+                    {
+                        pmPosition.Y -= 100;
+                    }
+                    if (TouchingLeft(gOrangeBox, pmBox, pmVelocity) || TouchingRight(gOrangeBox, pmBox, pmVelocity)
+                        || TouchingTop(gOrangeBox, pmBox, pmVelocity) || TouchingBottom(gOrangeBox, pmBox, pmVelocity))
+                    {
+                        pmPosition.Y -= 100;
+                    }
+                }
             }
-
-
-            pmPosition += pmVelocity;
-           // pmVelocity = Vector2.Zero;
-
-            int c = 0;
-            foreach (var coin in coins)
-            {
-                if (TouchingLeft(coin, pmBox, pmVelocity) || TouchingRight(coin, pmBox, pmVelocity) 
-                    || TouchingTop(coin, pmBox, pmVelocity) || TouchingBottom(coin, pmBox, pmVelocity))
-                {
-                    points++;
-                    coins.RemoveAt(c);
-                    break;
-                }
-                c++;
-            }
-            c = 0;
-
-
-            int p = 0;
-            foreach (var power in powers)
-            {
-                if (TouchingLeft(power, pmBox, pmVelocity) || TouchingRight(power, pmBox, pmVelocity) 
-                    || TouchingTop(power, pmBox, pmVelocity) || TouchingBottom(power, pmBox, pmVelocity))
-                {
-                    powerTimer = 60 * 10;
-                    powers.RemoveAt(p);
-                    break;
-                }
-                p++;
-            }
-            p = 0;
-
-            if (TouchingRight(tpLeft, pmBox, pmVelocity))
-            {
-                pmPosition.X += 420;
-            }
-
-            if (TouchingLeft(tpRight, pmBox, pmVelocity))
-            {
-                pmPosition.X -= 420;
-            }
-
-
-            if(powerTimer > 0)
-            {
-                if (TouchingLeft(gRedBox, pmBox, pmVelocity) || TouchingRight(gRedBox, pmBox, pmVelocity) 
-                    || TouchingTop(gRedBox, pmBox, pmVelocity) || TouchingBottom(gRedBox, pmBox, pmVelocity))
-                {
-                    gRedPosition.Y -= 50;
-                }
-                if (TouchingLeft(gBlueBox, pmBox, pmVelocity) || TouchingRight(gBlueBox, pmBox, pmVelocity) 
-                    || TouchingTop(gBlueBox, pmBox, pmVelocity) || TouchingBottom(gBlueBox, pmBox, pmVelocity))
-                {
-                    gBluePosition.Y -= 50;
-                }
-                if (TouchingLeft(gPinkBox, pmBox, pmVelocity) || TouchingRight(gPinkBox, pmBox, pmVelocity) 
-                    || TouchingTop(gPinkBox, pmBox, pmVelocity) || TouchingBottom(gPinkBox, pmBox, pmVelocity))
-                {
-                    gPinkPosition.Y -= 50;
-                }
-                if (TouchingLeft(gOrangeBox, pmBox, pmVelocity) || TouchingRight(gOrangeBox, pmBox, pmVelocity) 
-                    || TouchingTop(gOrangeBox, pmBox, pmVelocity) || TouchingBottom(gOrangeBox, pmBox, pmVelocity))
-                {
-                    gOrangePosition.Y -= 50;
-                }
-                powerTimer -= 1;
-            }
-
-            else
-            {
-                if (TouchingLeft(gRedBox, pmBox, pmVelocity) || TouchingRight(gRedBox, pmBox, pmVelocity) 
-                    || TouchingTop(gRedBox, pmBox, pmVelocity) || TouchingBottom(gRedBox, pmBox, pmVelocity))
-                {
-                    pmPosition.Y -= 100;
-                }
-                if (TouchingLeft(gBlueBox, pmBox, pmVelocity) || TouchingRight(gBlueBox, pmBox, pmVelocity) 
-                    || TouchingTop(gBlueBox, pmBox, pmVelocity) || TouchingBottom(gBlueBox, pmBox, pmVelocity))
-                {
-                    pmPosition.Y -= 100;
-                }
-                if (TouchingLeft(gPinkBox, pmBox, pmVelocity) || TouchingRight(gPinkBox, pmBox, pmVelocity) 
-                    || TouchingTop(gPinkBox, pmBox, pmVelocity) || TouchingBottom(gPinkBox, pmBox, pmVelocity))
-                {
-                    pmPosition.Y -= 100;
-                }
-                if (TouchingLeft(gOrangeBox, pmBox, pmVelocity) || TouchingRight(gOrangeBox, pmBox, pmVelocity) 
-                    || TouchingTop(gOrangeBox, pmBox, pmVelocity) || TouchingBottom(gOrangeBox, pmBox, pmVelocity))
-                {
-                    pmPosition.Y -= 100;
-                }
-            }
+            PacmanUpdate();
 
 
 
@@ -706,6 +713,8 @@ namespace GYMARB_PacMan
 
 
             base.Update(gameTime);
+
+            
         }
 
         protected override void Draw(GameTime gameTime)
