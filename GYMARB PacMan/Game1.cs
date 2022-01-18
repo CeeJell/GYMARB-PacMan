@@ -20,7 +20,7 @@ namespace GYMARB_PacMan
         Texture2D pmTest;
 
         Texture2D gRedTexture;
-        Vector2 gRedPosition = new Vector2(692, 255);
+        Vector2 gRedPosition = new Vector2(690, 252);
         Rectangle gRedBox;
 
         Texture2D gBlueTexture;
@@ -37,6 +37,7 @@ namespace GYMARB_PacMan
 
         float gSpeed = 1.5f;
         Vector2 gVelocity;
+        Texture2D gVulnTexture;
 
         Texture2D coinTexture;
 
@@ -100,6 +101,7 @@ namespace GYMARB_PacMan
             gBlueTexture = Content.Load<Texture2D>("GhostBlue");
             gPinkTexture = Content.Load<Texture2D>("GhostPink");
             gOrangeTexture = Content.Load<Texture2D>("GhostOrange");
+            gVulnTexture = Content.Load<Texture2D>("GhostVuln");
             coinTexture = Content.Load<Texture2D>("Coin");
             powerTexture = Content.Load<Texture2D>("PowerUp");
             font = Content.Load<SpriteFont>("font");
