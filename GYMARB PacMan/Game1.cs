@@ -580,7 +580,25 @@ namespace GYMARB_PacMan
                 user.Right > touch.Left &&
                 user.Left < touch.Right;
         }
-        
+
+
+        float DistanceCalc(float X, float Y)
+        {
+            return X * X + Y * Y;
+        }
+
+        string ClosestDirection(float X, float Y)
+        {
+            float D = DistanceCalc(pmPosition.X - (X + 15), pmPosition.Y - (Y)); //höger
+            float A = DistanceCalc(pmPosition.X - (X - 15), pmPosition.Y - (Y)); //vänster
+            float S = DistanceCalc(pmPosition.X - (X), pmPosition.Y - (Y + 15)); //ner
+            float W = DistanceCalc(pmPosition.X - (X), pmPosition.Y - (Y - 15)); //upp
+
+            float[] CloseToFar = new float[4] { W, A, S, D };
+            Array.Sort(CloseToFar);
+            return CloseToFar.ToString();
+ 
+        }
 
         protected override void Update(GameTime gameTime)
         {
@@ -711,7 +729,7 @@ namespace GYMARB_PacMan
 
             void GhostUpdate()
             {
-                if (pmPosition.X - gRedPosition.X > 0) // pacman höger om
+                /* if (pmPosition.X - gRedPosition.X > 0) // pacman höger om 
                 {
                     if (pmPosition.Y - gRedPosition.Y > 0) // pacman under
                     {
@@ -777,8 +795,29 @@ namespace GYMARB_PacMan
                         }
                     }
                 }
+*/
 
 
+                if (ClosestDirection(gRedPosition.X, gRedPosition.Y)[0] == 'D')
+                {
+                    gRedVelocity.X = gSpeed;
+                    gRedDirection = 'D';
+                }
+                else if (ClosestDirection(gRedPosition.X, gRedPosition.Y)[0] == 'A')
+                {
+                    gRedVelocity.X = -gSpeed;
+                    gRedDirection = 'A';
+                }
+                else if (ClosestDirection(gRedPosition.X, gRedPosition.Y)[0] == 'S')
+                {
+                    gRedVelocity.Y = gSpeed;
+                    gRedDirection = 'S';
+                }
+                else
+                {
+                    gRedVelocity.Y = -gSpeed;
+                    gRedDirection = 'W';
+                }
 
 
 
@@ -788,6 +827,11 @@ namespace GYMARB_PacMan
                         gRedVelocity.X = 0;
                     if (gRedVelocity.Y > 0 && TouchingTop(wall, gRedBox, gRedVelocity) || gRedVelocity.Y < 0 && TouchingBottom(wall, gRedBox, gRedVelocity))
                         gRedVelocity.Y = 0;
+
+
+
+
+
                 }
 
                 gRedPosition += gRedVelocity;
@@ -808,6 +852,7 @@ namespace GYMARB_PacMan
             /*
             ghost algorithm
             kan inte vända sig 180 grader
+            den ska gå så den hamnar som närmast sitt mål. 
             kan inte gå genom väggar
             upp, vänster, ner, höger
             när spöke blir vulnerable, vänd 180 grader
