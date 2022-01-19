@@ -22,21 +22,24 @@ namespace GYMARB_PacMan
         Texture2D gRedTexture;
         Vector2 gRedPosition = new Vector2(690, 252);
         Rectangle gRedBox;
+        Vector2 gRedVelocity;
 
         Texture2D gBlueTexture;
         Vector2 gBluePosition = new Vector2(20, 100);
         Rectangle gBlueBox;
+        Vector2 gBlueVelocity;
 
         Texture2D gPinkTexture;
         Vector2 gPinkPosition = new Vector2(70, 100);
         Rectangle gPinkBox;
+        Vector2 gPinkVelocity;
 
         Texture2D gOrangeTexture;
         Vector2 gOrangePosition = new Vector2(120, 100);
         Rectangle gOrangeBox;
+        Vector2 gOrangeVelocity;
 
         float gSpeed = 1.5f;
-        Vector2 gVelocity;
         Texture2D gVulnTexture;
 
         Texture2D coinTexture;
@@ -702,7 +705,42 @@ namespace GYMARB_PacMan
             }
             PacmanUpdate();
 
+            void GhostUpdate()
+            {
+                if (pmPosition.X - gRedPosition.X > 0) // pacman höger om
+                {
+                    if (pmPosition.Y - gRedPosition.Y > 0) // pacman under
+                    {
+                        if (pmPosition.X - gRedPosition.X < pmPosition.Y - gRedPosition.Y)
+                            gRedVelocity.X = gSpeed;
+                        else
+                            gRedVelocity.Y = gSpeed;
+                    }
+                    else
+                    {
+                        if (pmPosition.X - gRedPosition.X < gRedPosition.Y - pmPosition.Y)
+                            gRedVelocity.X = gSpeed;
+                        else
+                            gRedVelocity.Y = -gSpeed;
+                    }
+                }
 
+                foreach (var wall in walls)
+                {
+                    if (gRedVelocity.X > 0 && TouchingLeft(wall, gRedBox, gRedVelocity) || gRedVelocity.X < 0 && TouchingRight(wall, gRedBox, gRedVelocity))
+                        gRedVelocity.X = 0;
+                    if (gRedVelocity.Y > 0 && TouchingTop(wall, gRedBox, gRedVelocity) || gRedVelocity.Y < 0 && TouchingBottom(wall, gRedBox, gRedVelocity))
+                        gRedVelocity.Y = 0;
+                }
+
+                gRedPosition += gRedVelocity;
+
+
+
+
+
+            }
+            GhostUpdate();
 
             if (coins.Count == 0)
             {
@@ -710,9 +748,15 @@ namespace GYMARB_PacMan
                 coins.Add(new Rectangle(-5, -5, 0, 0));
             }
 
-
-
-
+            /*
+            ghost algorithm
+            kan inte vända sig 180 grader
+            kan inte gå genom väggar
+            upp, vänster, ner, höger
+            när spöke blir vulnerable, vänd 180 grader
+            om spöke är vulnerable, random håll
+            byte från scatter till chase, vänd 180 grader
+            */
 
             base.Update(gameTime);
 
