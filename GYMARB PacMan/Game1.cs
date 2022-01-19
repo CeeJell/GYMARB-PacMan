@@ -23,21 +23,25 @@ namespace GYMARB_PacMan
         Vector2 gRedPosition = new Vector2(690, 252);
         Rectangle gRedBox;
         Vector2 gRedVelocity;
+        char gRedDirection; // wasd
 
         Texture2D gBlueTexture;
         Vector2 gBluePosition = new Vector2(20, 100);
         Rectangle gBlueBox;
         Vector2 gBlueVelocity;
+        char gBlueDirection; // wasd
 
         Texture2D gPinkTexture;
         Vector2 gPinkPosition = new Vector2(70, 100);
         Rectangle gPinkBox;
         Vector2 gPinkVelocity;
+        char gPinkDirection; // wasd
 
         Texture2D gOrangeTexture;
         Vector2 gOrangePosition = new Vector2(120, 100);
         Rectangle gOrangeBox;
         Vector2 gOrangeVelocity;
+        char gOrangeDirection; // wasd
 
         float gSpeed = 1.5f;
         Texture2D gVulnTexture;
@@ -712,18 +716,67 @@ namespace GYMARB_PacMan
                     if (pmPosition.Y - gRedPosition.Y > 0) // pacman under
                     {
                         if (pmPosition.X - gRedPosition.X < pmPosition.Y - gRedPosition.Y)
+                        {
                             gRedVelocity.X = gSpeed;
+                            gRedDirection = 'D';
+                        }
+
                         else
+                        {
                             gRedVelocity.Y = gSpeed;
+                            gRedDirection = 'S';
+                        }
+
                     }
-                    else
+                    else // pacman över
                     {
                         if (pmPosition.X - gRedPosition.X < gRedPosition.Y - pmPosition.Y)
+                        {
                             gRedVelocity.X = gSpeed;
+                            gRedDirection = 'D';
+                        }
                         else
+                        {
                             gRedVelocity.Y = -gSpeed;
+                            gRedDirection = 'W';
+                        }
                     }
                 }
+                else // pacman vänster om
+                {
+                    if (pmPosition.Y - gRedPosition.Y > 0) // pacman under
+                    {
+                        if (gRedPosition.X - pmPosition.X < pmPosition.Y - gRedPosition.Y)
+                        {
+                            gRedVelocity.X = -gSpeed;
+                            gRedDirection = 'A';
+                        }
+
+                        else
+                        {
+                            gRedVelocity.Y = gSpeed;
+                            gRedDirection = 'S';
+                        }
+
+                    }
+                    else // pacman över
+                    {
+                        if (pmPosition.X - gRedPosition.X > pmPosition.Y - gRedPosition.Y)
+                        {
+                            gRedVelocity.X = -gSpeed;
+                            gRedDirection = 'A';
+                        }
+                        else
+                        {
+                            gRedVelocity.Y = -gSpeed;
+                            gRedDirection = 'W';
+                        }
+                    }
+                }
+
+
+
+
 
                 foreach (var wall in walls)
                 {
