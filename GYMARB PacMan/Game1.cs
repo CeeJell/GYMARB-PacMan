@@ -14,7 +14,7 @@ namespace GYMARB_PacMan
         Texture2D pmTexture;
         Vector2 pmPosition = new Vector2(689, 342);
         Rectangle pmBox;
-        float pmSpeed = 2.5f;
+        float pmSpeed = 15/6f;
         Vector2 pmVelocity;
 
         Texture2D pmTest;
@@ -43,7 +43,7 @@ namespace GYMARB_PacMan
         Vector2 gOrangeVelocity;
         char gOrangeDirection; // wasd
 
-        float gSpeed = 1.5f;
+        float gSpeed = 15/7f;
         Texture2D gVulnTexture;
 
         Texture2D coinTexture;
@@ -729,7 +729,7 @@ namespace GYMARB_PacMan
 
             void GhostUpdate()
             {
-                /* if (pmPosition.X - gRedPosition.X > 0) // pacman höger om 
+                 if (pmPosition.X - gRedPosition.X > 0) // pacman höger om 
                 {
                     if (pmPosition.Y - gRedPosition.Y > 0) // pacman under
                     {
@@ -795,9 +795,9 @@ namespace GYMARB_PacMan
                         }
                     }
                 }
-*/
 
 
+/*
                 if (ClosestDirection(gRedPosition.X, gRedPosition.Y)[0] == 'D')
                 {
                     gRedVelocity.X = gSpeed;
@@ -818,7 +818,7 @@ namespace GYMARB_PacMan
                     gRedVelocity.Y = -gSpeed;
                     gRedDirection = 'W';
                 }
-
+*/
 
 
                 foreach (var wall in walls)
@@ -856,7 +856,7 @@ namespace GYMARB_PacMan
             kan inte gå genom väggar
             upp, vänster, ner, höger
             när spöke blir vulnerable, vänd 180 grader
-            om spöke är vulnerable, random håll
+            om spöke är vulnerable, random håll varje korsning
             byte från scatter till chase, vänd 180 grader
             */
 
