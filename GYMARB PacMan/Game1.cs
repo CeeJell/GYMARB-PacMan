@@ -19,6 +19,8 @@ namespace GYMARB_PacMan
 
         Texture2D pmTest;
 
+        string test;
+
         Texture2D gRedTexture;
         Vector2 gRedPosition = new Vector2(690, 252);
         Rectangle gRedBox;
@@ -837,7 +839,7 @@ namespace GYMARB_PacMan
                 gRedPosition += gRedVelocity;
 
 
-
+                test = ClosestDirection(gRedPosition.X, gRedPosition.Y);
 
 
             }
@@ -891,6 +893,8 @@ namespace GYMARB_PacMan
             spriteBatch.DrawString(font, points.ToString(), new Vector2(10, 20), Color.White);
 
             spriteBatch.DrawString(font, powerTimer.ToString(), new Vector2(40, 20), Color.White);
+
+            spriteBatch.DrawString(font, test, new Vector2(40, 20), Color.White);
 
             spriteBatch.Draw(gBlueTexture, gBluePosition, Color.White);
 
