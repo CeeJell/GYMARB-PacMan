@@ -14,7 +14,7 @@ namespace GYMARB_PacMan
         Texture2D pmTexture;
         Vector2 pmPosition = new Vector2(689, 342);
         Rectangle pmBox;
-        float pmSpeed = 15/6f;
+        float pmSpeed = 15/7f;
         Vector2 pmVelocity;
 
         Texture2D pmTest;
@@ -43,7 +43,7 @@ namespace GYMARB_PacMan
         Vector2 gOrangeVelocity;
         char gOrangeDirection; // wasd
 
-        float gSpeed = 15/7f;
+        float gSpeed = 15/8f;
         Texture2D gVulnTexture;
 
         Texture2D coinTexture;
@@ -766,7 +766,19 @@ namespace GYMARB_PacMan
                 {
                     foreach (var wall in walls)
                     {
-                        if (TouchingRight(wall, gRedBox, gRedVelocity) || gRedDirection == 'A') { }
+                        if (TouchingRight(wall, gRedBox, gRedVelocity) || gRedDirection == 'A') 
+                        {
+                            if (ClosestDirection(gRedPosition, pmPosition)[1] == 'W' && !TouchingTop(wall, gRedBox, gRedVelocity))
+                            {
+                                gRedVelocity.Y = -gSpeed;
+                                gRedDirection = 'W';
+                            }
+                            else
+                            {
+                                gRedVelocity.Y = gSpeed;
+                                gRedDirection = 'S';
+                            }
+                        }
                         else
                         {
                             gRedVelocity.X = gSpeed;
@@ -778,7 +790,19 @@ namespace GYMARB_PacMan
                 {
                     foreach (var wall in walls)
                     {
-                        if (TouchingLeft(wall, gRedBox, gRedVelocity) || gRedDirection == 'D') { }
+                        if (TouchingLeft(wall, gRedBox, gRedVelocity) || gRedDirection == 'D')
+                        {
+                            if (ClosestDirection(gRedPosition, pmPosition)[1] == 'W' && !TouchingTop(wall, gRedBox, gRedVelocity))
+                            {
+                                gRedVelocity.Y = -gSpeed;
+                                gRedDirection = 'W';
+                            }
+                            else
+                            {
+                                gRedVelocity.Y = gSpeed;
+                                gRedDirection = 'S';
+                            }
+                        }
                         else
                         {
                             gRedVelocity.X = -gSpeed;
@@ -790,7 +814,19 @@ namespace GYMARB_PacMan
                 {
                     foreach (var wall in walls)
                     {
-                        if (TouchingBottom(wall, gRedBox, gRedVelocity) || gRedDirection == 'W') { }
+                        if (TouchingBottom(wall, gRedBox, gRedVelocity) || gRedDirection == 'W') 
+                        {
+                            if (ClosestDirection(gRedPosition, pmPosition)[1] == 'A' && !TouchingLeft(wall, gRedBox, gRedVelocity))
+                            {
+                                gRedVelocity.X = -gSpeed;
+                                gRedDirection = 'A';
+                            }
+                            else
+                            {
+                                gRedVelocity.X = gSpeed;
+                                gRedDirection = 'D';
+                            }
+                        }
                         else
                         {
                             gRedVelocity.Y = gSpeed;
@@ -802,7 +838,19 @@ namespace GYMARB_PacMan
                 {
                     foreach (var wall in walls)
                     {
-                        if (TouchingTop(wall, gRedBox, gRedVelocity) || gRedDirection == 'S') { }
+                        if (TouchingTop(wall, gRedBox, gRedVelocity) || gRedDirection == 'S') 
+                        {
+                            if (ClosestDirection(gRedPosition, pmPosition)[1] == 'A' && !TouchingLeft(wall, gRedBox, gRedVelocity))
+                            {
+                                gRedVelocity.X = -gSpeed;
+                                gRedDirection = 'A';
+                            }
+                            else
+                            {
+                                gRedVelocity.X = gSpeed;
+                                gRedDirection = 'D';
+                            }
+                        }
                         else
                         {
                             gRedVelocity.Y = -gSpeed;
@@ -820,11 +868,6 @@ namespace GYMARB_PacMan
                         gRedVelocity.X = 0;
                     if (gRedVelocity.Y > 0 && TouchingTop(wall, gRedBox, gRedVelocity) || gRedVelocity.Y < 0 && TouchingBottom(wall, gRedBox, gRedVelocity))
                         gRedVelocity.Y = 0;
-
-
-
-
-
                 }
 
                 gRedPosition += gRedVelocity;
