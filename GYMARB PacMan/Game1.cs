@@ -19,8 +19,6 @@ namespace GYMARB_PacMan
 
         Texture2D pmTest;
 
-        string test;
-
         Texture2D gRedTexture;
         Vector2 gRedPosition = new Vector2(690, 252);
         Rectangle gRedBox;
@@ -589,17 +587,46 @@ namespace GYMARB_PacMan
             return X * X + Y * Y;
         }
 
-        string ClosestDirection(float X, float Y)
+        string ClosestDirection(Vector2 user, Vector2 target)
         {
-            float D = DistanceCalc(pmPosition.X - (X + 15), pmPosition.Y - (Y)); //höger
-            float A = DistanceCalc(pmPosition.X - (X - 15), pmPosition.Y - (Y)); //vänster
-            float S = DistanceCalc(pmPosition.X - (X), pmPosition.Y - (Y + 15)); //ner
-            float W = DistanceCalc(pmPosition.X - (X), pmPosition.Y - (Y - 15)); //upp
+            
+            float D = DistanceCalc(target.X - (user.X + 15), target.Y - (user.Y)); //höger
+            float A = DistanceCalc(target.X - (user.X - 15), target.Y - (user.Y)); //vänster
+            float S = DistanceCalc(target.X - (user.X), target.Y - (user.Y + 15)); //ner
+            float W = DistanceCalc(target.X - (user.X), target.Y - (user.Y - 15)); //upp
 
-            float[] CloseToFar = new float[4] { W, A, S, D };
-            Array.Sort(CloseToFar);
-            return CloseToFar.ToString();
- 
+            if (W < S && W <= A && W <= S)
+            {
+                if (D < A)
+                    return "WDAS";
+                else
+                    return "WADS";
+            }
+            else if (A < D && A <= S)
+            {
+                if (W < S)
+                    return "AWSD";
+                else
+                    return "ASWD";
+            }
+            else if (S <= D)
+            {
+                if (D < A)
+                    return "SDAW";
+                else
+                    return "SADW";
+            }
+            else
+            {
+                if (W < S)
+                    return "DWSA";
+                else
+                    return "DSWA";
+            }
+
+
+
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -731,96 +758,60 @@ namespace GYMARB_PacMan
 
             void GhostUpdate()
             {
-                 if (pmPosition.X - gRedPosition.X > 0) // pacman höger om 
+                 
+
+
+                
+                if (ClosestDirection(gRedPosition, pmPosition)[0] == 'D')
                 {
-                    if (pmPosition.Y - gRedPosition.Y > 0) // pacman under
+                    foreach (var wall in walls)
                     {
-                        if (pmPosition.X - gRedPosition.X < pmPosition.Y - gRedPosition.Y)
-                        {
-                            gRedVelocity.Y = gSpeed;
-                            gRedDirection = 'S';
-                        }
-
+                        if (TouchingRight(wall, gRedBox, gRedVelocity) || gRedDirection == 'A') { }
                         else
                         {
-
-                            gRedVelocity.X = gSpeed;
-                            gRedDirection = 'D';
-                        }
-
-                    }
-                    else // pacman över
-                    {
-                        if (pmPosition.X - gRedPosition.X < gRedPosition.Y - pmPosition.Y)
-                        {
-                            gRedVelocity.Y = -gSpeed;
-                            gRedDirection = 'W';
-                        }
-                        else
-                        {
-
                             gRedVelocity.X = gSpeed;
                             gRedDirection = 'D';
                         }
                     }
                 }
-                else // pacman vänster om
+                else if (ClosestDirection(gRedPosition, pmPosition)[0] == 'A')
                 {
-                    if (pmPosition.Y - gRedPosition.Y > 0) // pacman under
+                    foreach (var wall in walls)
                     {
-                        if (gRedPosition.X - pmPosition.X < pmPosition.Y - gRedPosition.Y)
+                        if (TouchingLeft(wall, gRedBox, gRedVelocity) || gRedDirection == 'D') { }
+                        else
+                        {
+                            gRedVelocity.X = -gSpeed;
+                            gRedDirection = 'A';
+                        }
+                    }
+                }
+                else if (ClosestDirection(gRedPosition, pmPosition)[0] == 'S')
+                {
+                    foreach (var wall in walls)
+                    {
+                        if (TouchingBottom(wall, gRedBox, gRedVelocity) || gRedDirection == 'W') { }
+                        else
                         {
                             gRedVelocity.Y = gSpeed;
                             gRedDirection = 'S';
                         }
-
-                        else
-                        {
-
-                            gRedVelocity.X = -gSpeed;
-                            gRedDirection = 'A';
-                        }
-
                     }
-                    else // pacman över
-                    {
-                        if (pmPosition.X - gRedPosition.X > pmPosition.Y - gRedPosition.Y)
-                        {
-                            gRedVelocity.Y = -gSpeed;
-                            gRedDirection = 'W';
-                        }
-                        else
-                        {
-
-                            gRedVelocity.X = -gSpeed;
-                            gRedDirection = 'A';
-                        }
-                    }
-                }
-
-
-/*
-                if (ClosestDirection(gRedPosition.X, gRedPosition.Y)[0] == 'D')
-                {
-                    gRedVelocity.X = gSpeed;
-                    gRedDirection = 'D';
-                }
-                else if (ClosestDirection(gRedPosition.X, gRedPosition.Y)[0] == 'A')
-                {
-                    gRedVelocity.X = -gSpeed;
-                    gRedDirection = 'A';
-                }
-                else if (ClosestDirection(gRedPosition.X, gRedPosition.Y)[0] == 'S')
-                {
-                    gRedVelocity.Y = gSpeed;
-                    gRedDirection = 'S';
                 }
                 else
                 {
-                    gRedVelocity.Y = -gSpeed;
-                    gRedDirection = 'W';
+                    foreach (var wall in walls)
+                    {
+                        if (TouchingTop(wall, gRedBox, gRedVelocity) || gRedDirection == 'S') { }
+                        else
+                        {
+                            gRedVelocity.Y = -gSpeed;
+                            gRedDirection = 'W';
+                        }
+                    }
                 }
-*/
+
+
 
 
                 foreach (var wall in walls)
@@ -838,8 +829,6 @@ namespace GYMARB_PacMan
 
                 gRedPosition += gRedVelocity;
 
-
-                test = ClosestDirection(gRedPosition.X, gRedPosition.Y);
 
 
             }
@@ -893,8 +882,6 @@ namespace GYMARB_PacMan
             spriteBatch.DrawString(font, points.ToString(), new Vector2(10, 20), Color.White);
 
             spriteBatch.DrawString(font, powerTimer.ToString(), new Vector2(40, 20), Color.White);
-
-            spriteBatch.DrawString(font, test, new Vector2(40, 20), Color.White);
 
             spriteBatch.Draw(gBlueTexture, gBluePosition, Color.White);
 
