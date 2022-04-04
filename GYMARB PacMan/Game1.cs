@@ -771,18 +771,19 @@ namespace GYMARB_PacMan
                             {
                                 gRedVelocity.Y = -gSpeed;
                                 gRedDirection = 'W';
-                                break;
                             }
                             else
                             {
                                 gRedVelocity.Y = gSpeed;
                                 gRedDirection = 'S';
-                                break;
                             }
                         }
+                        else
+                        {
+                            gRedVelocity.X = gSpeed;
+                            gRedDirection = 'D';
+                        }
                     }
-                    gRedVelocity.X = gSpeed;
-                    gRedDirection = 'D';
                 }
                 else if (ClosestDirection(gRedPosition, pmPosition)[0] == 'A')
                 {
@@ -794,18 +795,19 @@ namespace GYMARB_PacMan
                             {
                                 gRedVelocity.Y = -gSpeed;
                                 gRedDirection = 'W';
-                                break;
                             }
                             else
                             {
                                 gRedVelocity.Y = gSpeed;
                                 gRedDirection = 'S';
-                                break;
                             }
                         }
+                        else
+                        {
+                            gRedVelocity.X = -gSpeed;
+                            gRedDirection = 'A';
+                        }
                     }
-                    gRedVelocity.X = -gSpeed;
-                    gRedDirection = 'A';
                 }
                 else if (ClosestDirection(gRedPosition, pmPosition)[0] == 'S')
                 {
@@ -817,18 +819,19 @@ namespace GYMARB_PacMan
                             {
                                 gRedVelocity.X = -gSpeed;
                                 gRedDirection = 'A';
-                                break;
                             }
                             else
                             {
                                 gRedVelocity.X = gSpeed;
                                 gRedDirection = 'D';
-                                break;
                             }
                         }
+                        else
+                        {
+                            gRedVelocity.Y = gSpeed;
+                            gRedDirection = 'S';
+                        }
                     }
-                    gRedVelocity.Y = gSpeed;
-                    gRedDirection = 'S';
                 }
                 else
                 {
@@ -840,18 +843,19 @@ namespace GYMARB_PacMan
                             {
                                 gRedVelocity.X = -gSpeed;
                                 gRedDirection = 'A';
-                                break;
                             }
                             else
                                 {
                                 gRedVelocity.X = gSpeed;
                                 gRedDirection = 'D';
-                                break;
                             }
                         }
+                        else
+                        {
+                            gRedVelocity.Y = -gSpeed;
+                            gRedDirection = 'W';
+                        }
                     }
-                    gRedVelocity.Y = -gSpeed;
-                    gRedDirection = 'W';
                 }
                 
                 foreach (var wall in walls)
